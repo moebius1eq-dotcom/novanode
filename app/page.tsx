@@ -1,12 +1,14 @@
 "use client";
 
-import { useState, useMemo, Suspense } from "react";
+import { useState, useMemo, Suspense, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 import spotsData from "@/data/spots.json";
 import { WorkSpot, Neighborhood } from "@/lib/types";
 import { NEIGHBORHOODS } from "@/lib/constants";
 import SearchBar from "@/components/SearchBar";
-import LocationGrid from "@/components/LocationGrid";
+import LocationCard from "@/components/LocationCard";
+import FilterPanel, { FilterState } from "@/components/FilterPanel";
 
 function HomeContent() {
   const searchParams = useSearchParams();
@@ -14,16 +16,45 @@ function HomeContent() {
   // Get filter params from URL
   const neighborhoodFilter = searchParams.get("neighborhood") as Neighborhood | null;
   const queryFilter = searchParams.get("q") || "";
-  const highSpeedWifiFilter = searchParams.get("wifi") === "true";
-  const openLateFilter = searchParams.get("late") === "true";
 
   const spots = spotsData.spots as WorkSpot[];
 
-  // Filter spots based on URL params
+  // Local filter state
+  const [filters, setFilters] = useState<FilterState>({
+    neighborhoods: neighborhoodFilter ? [neighborhoodFilter] : [],
+    minUploadSpeed: 0,
+    outletDensity: "all",
+    openAfter8pm: false,
+    highSpeedWifi: false,
+    vibes: [],
+  });
+
+  const [showCompareBar, setShowCompareBar] = useState(false);
+  const [compareCount, setCompareCount] = useState(0);
+
+  // Listen for compare changes
+  useEffect(() => {
+    const stored = localStorage.getItem("compareSpots");
+    if (stored) {
+      const ids = JSON.parse(stored);
+      setCompareCount(ids.length);
+      setShowCompareBar(ids.length > 0);
+    }
+
+    const handleCompareChange = (e: CustomEvent) => {
+      setCompareCount(e.detail.ids.length);
+      setShowCompareBar(e.detail.ids.length > 0);
+    };
+
+    window.addEventListener("compareChange", handleCompareChange as EventListener);
+    return () => window.removeEventListener("compareChange", handleCompareChange as EventListener);
+  }, []);
+
+  // Filter spots based on all filters
   const filteredSpots = useMemo(() => {
     return spots.filter((spot) => {
       // Neighborhood filter
-      if (neighborhoodFilter && spot.neighborhood !== neighborhoodFilter) {
+      if (filters.neighborhoods.length > 0 && !filters.neighborhoods.includes(spot.neighborhood)) {
         return false;
       }
       
@@ -40,44 +71,102 @@ function HomeContent() {
         }
       }
       
-      // High-Speed Wi-Fi filter
-      if (highSpeedWifiFilter && !spot.highSpeedWifi) {
+      // Upload speed filter (Video Call Test)
+      if (filters.minUploadSpeed > 0 && spot.logistics.wifiSpeedUp < filters.minUploadSpeed) {
         return false;
       }
       
-      // Open Late filter
-      if (openLateFilter && !spot.openLate) {
+      // Outlet density filter (Power Hungry)
+      if (filters.outletDensity === "plenty" && spot.logistics.outletDensity !== "plenty") {
+        return false;
+      }
+      
+      // Open after 8pm filter (Late Night Hub)
+      if (filters.openAfter8pm) {
+        const hasLateHours = spot.hours.some(h => {
+          if (!h.open || !h.close) return false;
+          const closeHour = parseInt(h.close.split(":")[0]);
+          return closeHour >= 20;
+        });
+        if (!hasLateHours && !spot.openLate) return false;
+      }
+      
+      // High-Speed Wi-Fi filter
+      if (filters.highSpeedWifi && !spot.highSpeedWifi) {
+        return false;
+      }
+      
+      // Vibe filter
+      if (filters.vibes.length > 0 && !filters.vibes.includes(spot.vibe.primary)) {
         return false;
       }
       
       return true;
     });
-  }, [neighborhoodFilter, queryFilter, highSpeedWifiFilter, openLateFilter]);
+  }, [spots, filters, queryFilter]);
 
   // Get current filter state for display
   const getFilterSummary = () => {
-    const filters: string[] = [];
+    const filtersList: string[] = [];
     
     if (neighborhoodFilter) {
-      filters.push(NEIGHBORHOODS[neighborhoodFilter]);
+      filtersList.push(NEIGHBORHOODS[neighborhoodFilter]);
     }
-    if (highSpeedWifiFilter) {
-      filters.push("High-Speed Wi-Fi");
+    if (filters.highSpeedWifi) {
+      filtersList.push("High-Speed Wi-Fi");
     }
-    if (openLateFilter) {
-      filters.push("Open Late");
+    if (filters.openAfter8pm) {
+      filtersList.push("Open After 8pm");
+    }
+    if (filters.minUploadSpeed > 0) {
+      filtersList.push(`Upload >${filters.minUploadSpeed}Mbps`);
+    }
+    if (filters.outletDensity === "plenty") {
+      filtersList.push("Plenty of Outlets");
     }
     if (queryFilter) {
-      filters.push(`"${queryFilter}"`);
+      filtersList.push(`"${queryFilter}"`);
     }
     
-    return filters;
+    return filtersList;
   };
 
   const activeFilters = getFilterSummary();
 
   return (
     <div className="min-h-screen">
+      {/* Compare Bar */}
+      {showCompareBar && (
+        <div className="fixed bottom-0 left-0 right-0 bg-indigo-600 text-white py-3 px-4 z-50 shadow-lg">
+          <div className="max-w-7xl mx-auto flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <span className="font-medium">
+                {compareCount} {compareCount === 1 ? "spot" : "spots"} selected for comparison
+              </span>
+            </div>
+            <div className="flex items-center gap-3">
+              <Link
+                href="/compare"
+                className="px-4 py-2 bg-white text-indigo-600 font-medium rounded-lg hover:bg-indigo-50 transition-colors"
+              >
+                ⚖️ Compare Now
+              </Link>
+              <button
+                onClick={() => {
+                  localStorage.removeItem("compareSpots");
+                  setCompareCount(0);
+                  setShowCompareBar(false);
+                  window.dispatchEvent(new CustomEvent("compareChange", { detail: { ids: [] } }));
+                }}
+                className="text-white/80 hover:text-white"
+              >
+                ✕
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Hero Section */}
       <section className="bg-gradient-to-b from-indigo-50 to-white py-16 px-4">
         <div className="max-w-7xl mx-auto">
@@ -113,6 +202,10 @@ function HomeContent() {
               <span>💻</span>
               <span><strong>Laptop Policies</strong></span>
             </a>
+            <a href="/free-alternatives" className="flex items-center gap-2 px-3 py-1 bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition-colors">
+              <span>💰</span>
+              <span><strong>Free Spots</strong></span>
+            </a>
           </div>
         </div>
       </section>
@@ -120,35 +213,67 @@ function HomeContent() {
       {/* Results Section */}
       <section className="py-12 px-4">
         <div className="max-w-7xl mx-auto">
-          {/* Filter Summary */}
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-            <div>
-              <h2 className="text-2xl font-bold text-slate-900">
-                {neighborhoodFilter ? NEIGHBORHOODS[neighborhoodFilter] : "All Locations"}
-              </h2>
-              <p className="text-slate-500">
-                {filteredSpots.length} {filteredSpots.length === 1 ? "spot" : "spots"} found
-                {activeFilters.length > 0 && (
-                  <span className="ml-2">
-                    {activeFilters.map((filter, i) => (
-                      <span key={filter} className="inline-flex items-center">
-                        {i > 0 && <span className="mx-1">·</span>}
-                        <span className="bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full text-xs">
-                          {filter}
-                        </span>
+          <div className="flex flex-col lg:flex-row gap-8">
+            {/* Filter Sidebar */}
+            <div className="lg:w-64 flex-shrink-0">
+              <div className="bg-white rounded-xl p-4 border border-slate-200 sticky top-4">
+                <FilterPanel 
+                  filters={filters}
+                  onFilterChange={setFilters}
+                  spots={spots}
+                />
+              </div>
+            </div>
+
+            {/* Main Content */}
+            <div className="flex-1">
+              {/* Filter Summary */}
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+                <div>
+                  <h2 className="text-2xl font-bold text-slate-900">
+                    {neighborhoodFilter ? NEIGHBORHOODS[neighborhoodFilter] : "All Locations"}
+                  </h2>
+                  <p className="text-slate-500">
+                    {filteredSpots.length} {filteredSpots.length === 1 ? "spot" : "spots"} found
+                    {activeFilters.length > 0 && (
+                      <span className="ml-2">
+                        {activeFilters.map((filter, i) => (
+                          <span key={filter} className="inline-flex items-center">
+                            {i > 0 && <span className="mx-1">·</span>}
+                            <span className="bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full text-xs">
+                              {filter}
+                            </span>
+                          </span>
+                        ))}
                       </span>
-                    ))}
-                  </span>
-                )}
-              </p>
+                    )}
+                  </p>
+                </div>
+
+                {/* Compare Toggle */}
+                <button
+                  onClick={() => {
+                    const stored = localStorage.getItem("compareSpots");
+                    const ids = stored ? JSON.parse(stored) : [];
+                    if (ids.length > 0) {
+                      window.location.href = "/compare";
+                    } else {
+                      alert("Click the compare checkbox on any card to add spots for comparison");
+                    }
+                  }}
+                  className="px-4 py-2 border-2 border-indigo-600 text-indigo-600 font-medium rounded-lg hover:bg-indigo-50 transition-colors"
+                >
+                  ⚖️ Compare ({compareCount})
+                </button>
+              </div>
+
+              {/* Location Grid */}
+              <LocationGrid 
+                spots={filteredSpots} 
+                emptyMessage="No spots match your filters. Try adjusting your search."
+              />
             </div>
           </div>
-
-          {/* Location Grid */}
-          <LocationGrid 
-            spots={filteredSpots} 
-            emptyMessage="No spots match your filters. Try adjusting your search."
-          />
         </div>
       </section>
     </div>

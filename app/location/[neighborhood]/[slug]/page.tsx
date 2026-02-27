@@ -5,6 +5,8 @@ import { WorkSpot, LocalBusinessSchema, ReviewSchema } from "@/lib/types";
 import { NEIGHBORHOODS } from "@/lib/constants";
 import LogisticsCard from "@/components/LogisticsCard";
 import VibeIndicator from "@/components/VibeIndicator";
+import AmenitiesChecklist from "@/components/AmenitiesChecklist";
+import CommunityStatus from "@/components/CommunityStatus";
 
 // Static params for all locations (for static export)
 export async function generateStaticParams() {
@@ -267,6 +269,12 @@ export default async function LocationPage({
             
             {/* Sidebar */}
             <div className="space-y-6">
+              {/* Community Status */}
+              <CommunityStatus spot={spot} />
+              
+              {/* Amenities Checklist */}
+              <AmenitiesChecklist spot={spot} />
+              
               {/* Quick Info */}
               <div className="bg-white rounded-xl p-6 border border-slate-200">
                 <h3 className="font-semibold text-slate-900 mb-4">Quick Info</h3>

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { WorkSpot } from "@/lib/types";
 import { NEIGHBORHOODS } from "@/lib/constants";
@@ -8,14 +9,63 @@ import VibeIndicator from "./VibeIndicator";
 
 interface LocationCardProps {
   spot: WorkSpot;
+  showCompare?: boolean;
 }
 
-export default function LocationCard({ spot }: LocationCardProps) {
+export default function LocationCard({ spot, showCompare = false }: LocationCardProps) {
+  const [isSelectedForCompare, setIsSelectedForCompare] = useState(false);
+
+  // Sync with localStorage for comparison
+  useEffect(() => {
+    const stored = localStorage.getItem("compareSpots");
+    if (stored) {
+      const ids = JSON.parse(stored);
+      setIsSelectedForCompare(ids.includes(spot.id));
+    }
+  }, [spot.id]);
+
+  const handleCompareToggle = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const stored = localStorage.getItem("compareSpots");
+    let ids: string[] = stored ? JSON.parse(stored) : [];
+    
+    if (ids.includes(spot.id)) {
+      ids = ids.filter(id => id !== spot.id);
+    } else if (ids.length < 4) {
+      ids = [...ids, spot.id];
+    }
+    
+    localStorage.setItem("compareSpots", JSON.stringify(ids));
+    setIsSelectedForCompare(ids.includes(spot.id));
+    
+    // Dispatch custom event for other components
+    window.dispatchEvent(new CustomEvent("compareChange", { detail: { ids } }));
+  }, [spot.id]);
+
   return (
     <Link 
       href={`/location/${spot.neighborhood}/${spot.slug}`}
-      className="location-card group"
+      className="location-card group relative"
     >
+      {/* Compare Checkbox */}
+      {showCompare && (
+        <button
+          onClick={handleCompareToggle}
+          className={`absolute top-3 left-3 z-10 p-2 rounded-lg border-2 transition-all ${
+            isSelectedForCompare 
+              ? "bg-indigo-600 border-indigo-600 text-white" 
+              : "bg-white/90 border-slate-300 text-slate-400 hover:border-indigo-500 hover:text-indigo-500"
+          }`}
+          title={isSelectedForCompare ? "Remove from comparison" : "Add to comparison"}
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+          </svg>
+        </button>
+      )}
+      
       {/* Image Placeholder */}
       <div className="h-48 bg-gradient-to-br from-slate-200 to-slate-300 flex items-center justify-center relative overflow-hidden">
         <span className="text-6xl">☕</span>
