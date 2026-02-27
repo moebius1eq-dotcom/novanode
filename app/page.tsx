@@ -7,7 +7,7 @@ import spotsData from "@/data/spots.json";
 import { WorkSpot, Neighborhood } from "@/lib/types";
 import { NEIGHBORHOODS } from "@/lib/constants";
 import SearchBar from "@/components/SearchBar";
-import LocationCard from "@/components/LocationCard";
+import LocationGrid from "@/components/LocationGrid";
 import FilterPanel, { FilterState } from "@/components/FilterPanel";
 
 function HomeContent() {

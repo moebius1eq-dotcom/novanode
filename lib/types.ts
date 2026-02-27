@@ -6,7 +6,7 @@ export type VibePrimary = "focus" | "social" | "quiet" | "lively";
 
 export type OutletDensity = "sparse" | "moderate" | "plenty";
 
-export type SeatingType = "desk" | "couch" | "bar" | "communal" | "outdoor";
+export type SeatingType = "desk" | "couch" | "bar" | "communal" | "outdoor" | "stool" | "private-booths";
 
 export interface DayHours {
   day: string;
@@ -79,6 +79,7 @@ export interface LocalBusinessSchema {
   "@context": "https://schema.org";
   "@type": "LocalBusiness";
   name: string;
+  description?: string;
   address: {
     "@type": "PostalAddress";
     streetAddress: string;
@@ -90,6 +91,17 @@ export interface LocalBusinessSchema {
   telephone?: string;
   url?: string;
   priceRange?: string;
+  aggregateRating?: {
+    "@type": "AggregateRating";
+    ratingValue: number;
+    reviewCount: number;
+    bestRating: number;
+  };
+  amenityFeature?: {
+    "@type": "LocationFeatureSpecification";
+    name: string;
+    value: boolean;
+  }[];
   openingHoursSpecification?: OpeningHoursSpec[];
 }
 

@@ -26,17 +26,17 @@ const VIBE_OPTIONS = [
 
 export default function FilterPanel({ filters, onFilterChange }: FilterPanelProps) {
   const toggleNeighborhood = (n: string) => {
-    const new neighborhoods = filters.neighborhoods.includes(n)
+    const newNeighborhoods = filters.neighborhoods.includes(n)
       ? filters.neighborhoods.filter((x) => x !== n)
       : [...filters.neighborhoods, n];
-    onFilterChange({ ...filters, neighborhoods: new neighborhoods });
+    onFilterChange({ ...filters, neighborhoods: newNeighborhoods });
   };
 
   const toggleVibe = (v: string) => {
-    const new vibes = filters.vibes.includes(v)
+    const newVibes = filters.vibes.includes(v)
       ? filters.vibes.filter((x) => x !== v)
       : [...filters.vibes, v];
-    onFilterChange({ ...filters, vibes: new vibes });
+    onFilterChange({ ...filters, vibes: newVibes });
   };
 
   return (
