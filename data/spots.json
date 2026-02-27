@@ -259,8 +259,8 @@
       "openLate": true,
       "highSpeedWifi": false,
       "weekendFriendly": true,
-      "laptopPolicy": "Upstairs wine bar: laptops OK | Downstairs cafe: laptops OK all day",
-      "expertTip": "Best outlet access at the communal table downstairs. Upstairs is better for meetings but fewer outlets.",
+      "laptopPolicy": "Upstairs wine bar: laptops OK | Downstairs cafe: laptops OK all day | Weekend: upstairs restricted after 11am",
+      "expertTip": "⚠️ WEEKEND UPDATE: Upstairs strictly forbidden for laptops after 11 AM on Sat/Sun. Downstairs cafe stays laptop-friendly. Best outlet access at communal table downstairs.",
       "seo": {
         "description": "The king of NoVA work spots. Upstairs wine bar vs downstairs cafe - both laptop friendly but different vibes. Great community feel.",
         "priceRange": " $$",
@@ -352,7 +352,7 @@
       "highSpeedWifi": false,
       "weekendFriendly": true,
       "laptopPolicy": "Laptops welcome but very limited seating - arrive early",
-      "expertTip": "The big communal table has 2 outlets. Get there before 9am on weekends to claim a spot.",
+      "expertTip": "💡 PRO TIP: The King St. location is BETTER for laptop work than the waterfront one. The big communal table has 2 outlets. Get there before 9am on weekends to claim a spot.",
       "seo": {
         "description": "Beautiful historic Old Town coffee spot but notoriously hard to find a seat. People search for 'Misha's Coffee outlet locations' - answer: communal table only.",
         "priceRange": " $$",
@@ -398,8 +398,8 @@
       "weekendFriendly": true,
       "powerPlayer": true,
       "laptopPolicy": "Laptops welcome all day - 3 floors of seating",
-      "expertTip": "3 floors of seating. Best bandwidth for 4+ hour sessions. Top floor is quietest.",
-      "deepWorkZone": "3rd floor Deep Work zone with dedicated desks",
+      "expertTip": "3 floors of seating. Wi-Fi is strongest on Floor 2. Floor 3 is for 'Silent Work.' Best bandwidth for 4+ hour sessions.",
+      "deepWorkZone": "3rd floor Deep Work zone with dedicated desks - library quiet",
       "seo": {
         "description": "3 floors of seating with massive Wi-Fi bandwidth. Perfect for long work sessions. Great for 4+ hour deep work.",
         "priceRange": " $$",
@@ -669,7 +669,7 @@
       "weekendFriendly": true,
       "powerPlayer": true,
       "laptopPolicy": "Free guest WiFi - open to public during food court hours",
-      "expertTip": "Beautiful modern spaces. Coffee shop inside. Very quiet weekdays. Hidden gem for remote workers.",
+      "expertTip": "🔑 HIDDEN GEM: The 'Perch' and lobby areas are public-access and have enterprise-grade WiFi. Not widely known - this is why NoVaNode exists. Very quiet weekdays, free parking.",
       "seo": {
         "description": "Hidden gem at Capital One campus. Beautiful modern public spaces with fiber-speed guest WiFi. Free and uncrowded.",
         "priceRange": " $",
@@ -723,6 +723,52 @@
       },
       "images": {
         "hero": "/images/perch-hero.jpg"
+      }
+    },
+    {
+      "id": "spot-017",
+      "name": "Compass Coffee - Rosslyn",
+      "slug": "compass-coffee-rosslyn",
+      "neighborhood": "arlington",
+      "address": "1100 Wilson Blvd, Arlington, VA 22209",
+      "googleMapsUrl": "https://maps.google.com/?q=Compass+Coffee+Rosslyn",
+      "website": "https://compasscoffee.com",
+      "logistics": {
+        "wifiSpeedDown": 120,
+        "wifiSpeedUp": 60,
+        "outletDensity": "plenty",
+        "noiseLevel": 58,
+        "seatingType": ["desk", "communal", "bar"],
+        "verifiedAt": "2026-02-26T15:00:00Z",
+        "lastVerified": "Feb 26, 2026"
+      },
+      "vibe": {
+        "primary": "focus",
+        "tags": ["coffee", "power-dense", "desk-seating"]
+      },
+      "hours": [
+        { "day": "Sunday", "open": "08:00", "close": "18:00" },
+        { "day": "Monday", "open": "06:00", "close": "19:00" },
+        { "day": "Tuesday", "open": "06:00", "close": "19:00" },
+        { "day": "Wednesday", "open": "06:00", "close": "19:00" },
+        { "day": "Thursday", "open": "06:00", "close": "20:00" },
+        { "day": "Friday", "open": "06:00", "close": "20:00" },
+        { "day": "Saturday", "open": "07:00", "close": "19:00" }
+      ],
+      "openLate": false,
+      "highSpeedWifi": true,
+      "weekendFriendly": true,
+      "powerPlayer": true,
+      "laptopPolicy": "Laptops welcome all day - power outlets every 3 feet along perimeter wall",
+      "expertTip": "⚡ POWER DENSITY: The perimeter wall has outlets every 3 feet. Best for 'power hungry' remote workers. Gets busy 8-10am but quiets down after.",
+      "seo": {
+        "description": "Power-dense workspace in Rosslyn. Perimeter wall has outlets every 3 feet - every seat is a 'power seat.' Fast WiFi and great coffee.",
+        "priceRange": " $$",
+        "rating": 4.4,
+        "reviewCount": 178
+      },
+      "images": {
+        "hero": "/images/compass-hero.jpg"
       }
     }
   ]
