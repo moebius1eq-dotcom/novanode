@@ -69,6 +69,33 @@ export const generateWorkSpotJsonLd = (spot: WorkSpot, baseUrl: string = "https:
     },
   ];
 
+  // Add Zoom Score
+  if (spot.zoomScore) {
+    amenityFeatures.push({
+      "@type": "LocationFeatureSpecification",
+      name: "Zoom/Meeting Score",
+      value: `${spot.zoomScore}/10`,
+    });
+  }
+
+  // Add Metro Walk
+  if (spot.metroWalk) {
+    amenityFeatures.push({
+      "@type": "LocationFeatureSpecification",
+      name: "Metro Distance",
+      value: `${spot.metroWalk} min walk`,
+    });
+  }
+
+  // Add Parking
+  if (spot.parkingStatus) {
+    amenityFeatures.push({
+      "@type": "LocationFeatureSpecification",
+      name: "Parking",
+      value: spot.parkingStatus,
+    });
+  }
+
   // Add optional features
   if (spot.hasZoomPods) {
     amenityFeatures.push({

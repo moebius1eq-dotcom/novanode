@@ -81,6 +81,15 @@ export interface WorkSpot {
   isLibrary?: boolean;        // Public library
   has5G?: boolean;            // Verified 5G speeds
   deepWorkZone?: string;      // Description of dedicated zone
+  parkingInfo?: string;       // Parking details
+  
+  // 2026 Extended Fields
+  parkingStatus?: "free-garage" | "metered" | "street-difficult" | "paid-lot";
+  metroWalk?: number;        // Minutes to nearest metro
+  meetingFriendly?: boolean;  // Good for Zoom/meetings
+  zoomScore?: number;        // 1-10 score for video calls
+  weekendLaptopBan?: boolean; // Has laptop restrictions on weekends
+  lastUpdated?: string;      // Human-readable last update
 }
 
 // JSON-LD Schema Types
