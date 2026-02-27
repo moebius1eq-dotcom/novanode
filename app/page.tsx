@@ -207,6 +207,22 @@ function HomeContent() {
               <span><strong>Free Spots</strong></span>
             </a>
           </div>
+
+          {/* Quick Filters */}
+          <div className="flex flex-wrap justify-center gap-3 mt-6">
+            <a href="/?highSpeed=true" className="px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors">
+              ⚡ High-Speed WiFi
+            </a>
+            <a href="/?openLate=true" className="px-4 py-2 bg-slate-800 text-white text-sm font-medium rounded-lg hover:bg-slate-700 transition-colors">
+              🌙 Open Now
+            </a>
+            <a href="/free-parking-remote-work" className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors">
+              🅿️ Free Parking
+            </a>
+            <a href="/laptop-friendly-weekends" className="px-4 py-2 bg-amber-600 text-white text-sm font-medium rounded-lg hover:bg-amber-700 transition-colors">
+              💻 Weekend Friendly
+            </a>
+          </div>
         </div>
       </section>
 
