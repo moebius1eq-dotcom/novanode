@@ -15,7 +15,8 @@
         "outletDensity": "plenty",
         "noiseLevel": 65,
         "seatingType": ["desk", "communal", "bar"],
-        "verifiedAt": "2026-02-20T10:00:00Z"
+        "verifiedAt": "2026-02-20T10:00:00Z",
+        "lastVerified": "Feb 20, 2026"
       },
       "vibe": {
         "primary": "focus",
@@ -32,6 +33,7 @@
       ],
       "openLate": true,
       "highSpeedWifi": true,
+      "weekendFriendly": true,
       "laptopPolicy": "Laptops welcome all day",
       "seo": {
         "description": "Specialty coffee shop with fast Wi-Fi and dedicated work desks. Perfect for remote workers seeking a productive environment.",
@@ -58,7 +60,8 @@
         "outletDensity": "plenty",
         "noiseLevel": 42,
         "seatingType": ["desk", "communal"],
-        "verifiedAt": "2026-02-18T14:30:00Z"
+        "verifiedAt": "2026-02-18T14:30:00Z",
+        "lastVerified": "Feb 18, 2026"
       },
       "vibe": {
         "primary": "quiet",
@@ -75,7 +78,9 @@
       ],
       "openLate": true,
       "highSpeedWifi": true,
+      "weekendFriendly": true,
       "laptopPolicy": "Coworking space - laptops welcome",
+      "hasZoomPods": true,
       "seo": {
         "description": "Premium coworking space with gigabit internet, soundproof phone booths, and meeting rooms. Library-quiet environment.",
         "priceRange": " $$$",
@@ -99,7 +104,8 @@
         "outletDensity": "moderate",
         "noiseLevel": 72,
         "seatingType": ["couch", "communal", "outdoor"],
-        "verifiedAt": "2026-02-15T09:15:00Z"
+        "verifiedAt": "2026-02-15T09:15:00Z",
+        "lastVerified": "Feb 15, 2026"
       },
       "vibe": {
         "primary": "social",
@@ -116,6 +122,7 @@
       ],
       "openLate": false,
       "highSpeedWifi": false,
+      "weekendFriendly": false,
       "laptopPolicy": "Laptops welcome until 5pm on weekdays",
       "seo": {
         "description": "Lively coffee shop with a great brunch scene. Indoor/outdoor seating with decent Wi-Fi for casual work sessions.",
@@ -142,7 +149,8 @@
         "outletDensity": "plenty",
         "noiseLevel": 55,
         "seatingType": ["desk", "bar", "communal"],
-        "verifiedAt": "2026-02-22T11:00:00Z"
+        "verifiedAt": "2026-02-22T11:00:00Z",
+        "lastVerified": "Feb 22, 2026"
       },
       "vibe": {
         "primary": "focus",
@@ -160,6 +168,7 @@
       ],
       "openLate": true,
       "highSpeedWifi": true,
+      "weekendFriendly": true,
       "laptopPolicy": "Laptops welcome all day",
       "seo": {
         "description": "Early-opening roastery with blazing-fast Wi-Fi. Great for morning focus sessions, turns lively with live music on weekends.",
@@ -184,7 +193,8 @@
         "outletDensity": "moderate",
         "noiseLevel": 35,
         "seatingType": ["desk"],
-        "verifiedAt": "2026-02-19T16:00:00Z"
+        "verifiedAt": "2026-02-19T16:00:00Z",
+        "lastVerified": "Feb 26, 2026"
       },
       "vibe": {
         "primary": "quiet",
@@ -201,7 +211,10 @@
       ],
       "openLate": false,
       "highSpeedWifi": true,
+      "weekendFriendly": true,
       "laptopPolicy": "Laptops welcome - study rooms available",
+      "hasZoomPods": true,
+      "isLibrary": true,
       "seo": {
         "description": "Library-quiet public library with free high-speed Wi-Fi. Dedicated study rooms available. Perfect for deep focus work.",
         "priceRange": " $",
@@ -227,7 +240,8 @@
         "outletDensity": "plenty",
         "noiseLevel": 72,
         "seatingType": ["couch", "communal", "bar"],
-        "verifiedAt": "2026-02-26T12:00:00Z"
+        "verifiedAt": "2026-02-26T12:00:00Z",
+        "lastVerified": "Feb 26, 2026"
       },
       "vibe": {
         "primary": "social",
@@ -244,6 +258,7 @@
       ],
       "openLate": true,
       "highSpeedWifi": false,
+      "weekendFriendly": true,
       "laptopPolicy": "Upstairs wine bar: laptops OK | Downstairs cafe: laptops OK all day",
       "expertTip": "Best outlet access at the communal table downstairs. Upstairs is better for meetings but fewer outlets.",
       "seo": {
@@ -270,7 +285,8 @@
         "outletDensity": "plenty",
         "noiseLevel": 55,
         "seatingType": ["desk", "couch", "communal", "private-booths"],
-        "verifiedAt": "2026-02-26T14:00:00Z"
+        "verifiedAt": "2026-02-26T14:00:00Z",
+        "lastVerified": "Feb 26, 2026"
       },
       "vibe": {
         "primary": "focus",
@@ -287,7 +303,9 @@
       ],
       "openLate": false,
       "highSpeedWifi": true,
+      "weekendFriendly": true,
       "laptopPolicy": "Full access - this IS a coworking lounge ($35/day or membership)",
+      "hasZoomPods": true,
       "expertTip": "Worth every penny for the fiber-speed WiFi and unlimited coffee. Best for important calls.",
       "seo": {
         "description": "Paid lounge inside Tysons Mall. Is 3DEN worth it? Yes for fiber-speed WiFi and professional environment. Day passes available.",
@@ -314,7 +332,8 @@
         "outletDensity": "sparse",
         "noiseLevel": 68,
         "seatingType": ["communal", "couch"],
-        "verifiedAt": "2026-02-26T11:00:00Z"
+        "verifiedAt": "2026-02-26T11:00:00Z",
+        "lastVerified": "Feb 26, 2026"
       },
       "vibe": {
         "primary": "social",
@@ -331,6 +350,7 @@
       ],
       "openLate": false,
       "highSpeedWifi": false,
+      "weekendFriendly": true,
       "laptopPolicy": "Laptops welcome but very limited seating - arrive early",
       "expertTip": "The big communal table has 2 outlets. Get there before 9am on weekends to claim a spot.",
       "seo": {
@@ -357,7 +377,8 @@
         "outletDensity": "plenty",
         "noiseLevel": 58,
         "seatingType": ["desk", "communal", "couch", "outdoor"],
-        "verifiedAt": "2026-02-26T09:00:00Z"
+        "verifiedAt": "2026-02-26T09:00:00Z",
+        "lastVerified": "Feb 26, 2026"
       },
       "vibe": {
         "primary": "focus",
@@ -374,8 +395,11 @@
       ],
       "openLate": true,
       "highSpeedWifi": true,
+      "weekendFriendly": true,
+      "powerPlayer": true,
       "laptopPolicy": "Laptops welcome all day - 3 floors of seating",
       "expertTip": "3 floors of seating. Best bandwidth for 4+ hour sessions. Top floor is quietest.",
+      "deepWorkZone": "3rd floor Deep Work zone with dedicated desks",
       "seo": {
         "description": "3 floors of seating with massive Wi-Fi bandwidth. Perfect for long work sessions. Great for 4+ hour deep work.",
         "priceRange": " $$",
@@ -399,7 +423,8 @@
         "outletDensity": "moderate",
         "noiseLevel": 62,
         "seatingType": ["couch", "communal", "bar"],
-        "verifiedAt": "2026-02-26T10:00:00Z"
+        "verifiedAt": "2026-02-26T10:00:00Z",
+        "lastVerified": "Feb 26, 2026"
       },
       "vibe": {
         "primary": "social",
@@ -416,6 +441,7 @@
       ],
       "openLate": false,
       "highSpeedWifi": false,
+      "weekendFriendly": false,
       "laptopPolicy": "Laptops welcome 6:30am-11am (quiet time). Gets social after 1pm.",
       "expertTip": "Vibe shift: Extremely quiet 8am-11am. Vibe shifts to social hub after 1pm - not ideal for calls then. Open until 10pm on Fri/Sat.",
       "seo": {
@@ -441,7 +467,8 @@
         "outletDensity": "sparse",
         "noiseLevel": 55,
         "seatingType": ["communal"],
-        "verifiedAt": "2026-02-26T11:00:00Z"
+        "verifiedAt": "2026-02-26T11:00:00Z",
+        "lastVerified": "Feb 26, 2026"
       },
       "vibe": {
         "primary": "quiet",
@@ -458,6 +485,7 @@
       ],
       "openLate": false,
       "highSpeedWifi": false,
+      "weekendFriendly": true,
       "laptopPolicy": "Free - no restrictions but limited outlets",
       "expertTip": "Hidden free office near theater. Wi-Fi password usually on the pickup board. Very quiet.",
       "seo": {
@@ -484,7 +512,8 @@
         "outletDensity": "moderate",
         "noiseLevel": 65,
         "seatingType": ["communal", "bar", "outdoor"],
-        "verifiedAt": "2026-02-26T12:00:00Z"
+        "verifiedAt": "2026-02-26T12:00:00Z",
+        "lastVerified": "Feb 26, 2026"
       },
       "vibe": {
         "primary": "social",
@@ -501,6 +530,7 @@
       ],
       "openLate": true,
       "highSpeedWifi": false,
+      "weekendFriendly": true,
       "laptopPolicy": "Dedicated 'Work Zone' with fee ($15/day), front cafe is free",
       "expertTip": "Back 'Work Zone' requires entry fee but has dedicated desks. Front cafe area is free but gets busy.",
       "seo": {
@@ -511,6 +541,188 @@
       },
       "images": {
         "hero": "/images/threewhistles-hero.jpg"
+      }
+    },
+    {
+      "id": "spot-013",
+      "name": "Reston Regional Library",
+      "slug": "reston-regional-library",
+      "neighborhood": "reston",
+      "address": "11925 Lawyers Rd, Reston, VA 20190",
+      "googleMapsUrl": "https://maps.google.com/?q=Reston+Regional+Library",
+      "logistics": {
+        "wifiSpeedDown": 100,
+        "wifiSpeedUp": 50,
+        "outletDensity": "plenty",
+        "noiseLevel": 30,
+        "seatingType": ["desk", "communal"],
+        "verifiedAt": "2026-02-26T10:00:00Z",
+        "lastVerified": "Feb 26, 2026"
+      },
+      "vibe": {
+        "primary": "quiet",
+        "tags": ["free-wifi", "study-rooms", "printing", "meeting-rooms"]
+      },
+      "hours": [
+        { "day": "Sunday", "open": "01:00", "close": "05:00" },
+        { "day": "Monday", "open": "10:00", "close": "21:00" },
+        { "day": "Tuesday", "open": "10:00", "close": "21:00" },
+        { "day": "Wednesday", "open": "10:00", "close": "21:00" },
+        { "day": "Thursday", "open": "10:00", "close": "21:00" },
+        { "day": "Friday", "open": "10:00", "close": "18:00" },
+        { "day": "Saturday", "open": "10:00", "close": "18:00" }
+      ],
+      "openLate": false,
+      "highSpeedWifi": true,
+      "weekendFriendly": true,
+      "laptopPolicy": "Laptops welcome - free and open to all",
+      "hasZoomPods": true,
+      "isLibrary": true,
+      "expertTip": "Large quiet zones. Good meeting rooms. Modern facility. Great for focused work.",
+      "seo": {
+        "description": "Large modern library with free high-speed Wi-Fi. Large quiet zones and meeting rooms available.",
+        "priceRange": " $",
+        "rating": 4.6,
+        "reviewCount": 178
+      },
+      "images": {
+        "hero": "/images/reston-library-hero.jpg"
+      }
+    },
+    {
+      "id": "spot-014",
+      "name": "Charles E. Beatley Jr. Central Library",
+      "slug": "beatley-library-alexandria",
+      "neighborhood": "alexandria",
+      "address": "5005 Duke St, Alexandria, VA 22312",
+      "googleMapsUrl": "https://maps.google.com/?q=Beatley+Library+Alexandria",
+      "logistics": {
+        "wifiSpeedDown": 75,
+        "wifiSpeedUp": 35,
+        "outletDensity": "moderate",
+        "noiseLevel": 35,
+        "seatingType": ["desk", "communal"],
+        "verifiedAt": "2026-02-26T11:00:00Z",
+        "lastVerified": "Feb 26, 2026"
+      },
+      "vibe": {
+        "primary": "quiet",
+        "tags": ["free-wifi", "study-rooms", "printing", "meeting-rooms"]
+      },
+      "hours": [
+        { "day": "Sunday", "open": "01:00", "close": "05:00" },
+        { "day": "Monday", "open": "10:00", "close": "20:00" },
+        { "day": "Tuesday", "open": "10:00", "close": "20:00" },
+        { "day": "Wednesday", "open": "10:00", "close": "20:00" },
+        { "day": "Thursday", "open": "10:00", "close": "20:00" },
+        { "day": "Friday", "open": "10:00", "close": "18:00" },
+        { "day": "Saturday", "open": "10:00", "close": "18:00" }
+      ],
+      "openLate": false,
+      "highSpeedWifi": true,
+      "weekendFriendly": true,
+      "laptopPolicy": "Laptops welcome - study rooms available",
+      "hasZoomPods": false,
+      "isLibrary": true,
+      "expertTip": "Popular library in Alexandria. Study rooms available. Good for quiet work sessions.",
+      "seo": {
+        "description": "Alexandria's main library with free Wi-Fi. Study rooms and meeting rooms available for remote work.",
+        "priceRange": " $",
+        "rating": 4.3,
+        "reviewCount": 145
+      },
+      "images": {
+        "hero": "/images/beatley-library-hero.jpg"
+      }
+    },
+    {
+      "id": "spot-015",
+      "name": "Capital One Hall Public Spaces",
+      "slug": "capital-one-hall",
+      "neighborhood": "tysons",
+      "address": "1601 Spring Hill Rd, Tysons, VA 22102",
+      "googleMapsUrl": "https://maps.google.com/?q=Capital+One+Hall+Tysons",
+      "logistics": {
+        "wifiSpeedDown": 200,
+        "wifiSpeedUp": 100,
+        "outletDensity": "plenty",
+        "noiseLevel": 45,
+        "seatingType": ["desk", "communal", "couch"],
+        "verifiedAt": "2026-02-26T13:00:00Z",
+        "lastVerified": "Feb 26, 2026"
+      },
+      "vibe": {
+        "primary": "focus",
+        "tags": ["free-wifi", "hidden-gem", "corporate", "modern", "coffee-shop"]
+      },
+      "hours": [
+        { "day": "Sunday", "open": "08:00", "close": "20:00" },
+        { "day": "Monday", "open": "07:00", "close": "22:00" },
+        { "day": "Tuesday", "open": "07:00", "close": "22:00" },
+        { "day": "Wednesday", "open": "07:00", "close": "22:00" },
+        { "day": "Thursday", "open": "07:00", "close": "22:00" },
+        { "day": "Friday", "open": "07:00", "close": "22:00" },
+        { "day": "Saturday", "open": "09:00", "close": "20:00" }
+      ],
+      "openLate": true,
+      "highSpeedWifi": true,
+      "weekendFriendly": true,
+      "powerPlayer": true,
+      "laptopPolicy": "Free guest WiFi - open to public during food court hours",
+      "expertTip": "Beautiful modern spaces. Coffee shop inside. Very quiet weekdays. Hidden gem for remote workers.",
+      "seo": {
+        "description": "Hidden gem at Capital One campus. Beautiful modern public spaces with fiber-speed guest WiFi. Free and uncrowded.",
+        "priceRange": " $",
+        "rating": 4.5,
+        "reviewCount": 89
+      },
+      "images": {
+        "hero": "/images/capital-one-hero.jpg"
+      }
+    },
+    {
+      "id": "spot-016",
+      "name": "The Perch Tysons",
+      "slug": "the-perch-tysons",
+      "neighborhood": "tysons",
+      "address": "1743 Tysons One Pl, Tysons, VA 22102",
+      "googleMapsUrl": "https://maps.google.com/?q=The+Perch+Tysons",
+      "logistics": {
+        "wifiSpeedDown": 100,
+        "wifiSpeedUp": 50,
+        "outletDensity": "moderate",
+        "noiseLevel": 50,
+        "seatingType": ["outdoor", "communal"],
+        "verifiedAt": "2026-02-26T14:00:00Z",
+        "lastVerified": "Feb 26, 2026"
+      },
+      "vibe": {
+        "primary": "focus",
+        "tags": ["outdoor", "5g", "verizon-5g", "rooftop", "weather-dependent"]
+      },
+      "hours": [
+        { "day": "Sunday", "open": "10:00", "close": "18:00" },
+        { "day": "Monday", "open": "10:00", "close": "20:00" },
+        { "day": "Tuesday", "open": "10:00", "close": "20:00" },
+        { "day": "Wednesday", "open": "10:00", "close": "20:00" },
+        { "day": "Thursday", "open": "10:00", "close": "20:00" },
+        { "day": "Friday", "open": "10:00", "close": "21:00" },
+        { "day": "Saturday", "open": "10:00", "close": "19:00" }
+      ],
+      "openLate": false,
+      "highSpeedWifi": true,
+      "weekendFriendly": true,
+      "laptopPolicy": "Outdoor seating - bring your own 5G hotspot for best speeds",
+      "has5G": true,
+      "expertTip": "Verified 5G speeds (150+ Mbps on Verizon). Great outdoor option when weather cooperates. Shaded seating available.",
+      "seo": {
+        "description": "Outdoor rooftop workspace at Tysons. Best for fresh air working. Verified 5G connectivity for calls when indoor WiFi fails.",
+        "priceRange": " $$",
+        "rating": 4.1,
+        "reviewCount": 67
+      },
+      "images": {
+        "hero": "/images/perch-hero.jpg"
       }
     }
   ]

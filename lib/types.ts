@@ -21,6 +21,7 @@ export interface LogisticsData {
   noiseLevel: number;         // dB reading (measured)
   seatingType: SeatingType[];
   verifiedAt: string;         // ISO timestamp of last verification
+  lastVerified: string;      // Display-friendly date (e.g., "Feb 26, 2026")
 }
 
 export interface VibeData {
@@ -72,6 +73,14 @@ export interface WorkSpot {
   // Laptop Policy & Expert Tips
   laptopPolicy?: string;
   expertTip?: string;
+  
+  // New 2026 Fields
+  weekendFriendly?: boolean;    // Laptop-friendly on weekends
+  powerPlayer?: boolean;      // 100% outlet coverage
+  hasZoomPods?: boolean;      // Private pods for calls
+  isLibrary?: boolean;        // Public library
+  has5G?: boolean;            // Verified 5G speeds
+  deepWorkZone?: string;      // Description of dedicated zone
 }
 
 // JSON-LD Schema Types
