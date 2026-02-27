@@ -1,0 +1,517 @@
+{
+  "spots": [
+    {
+      "id": "spot-001",
+      "name": "Blue Print Coffee",
+      "slug": "blue-print-coffee",
+      "neighborhood": "arlington",
+      "address": "1234 Wilson Blvd, Arlington, VA 22209",
+      "googleMapsUrl": "https://maps.google.com/?q=Blue+Print+Coffee+Arlington",
+      "website": "https://blueprintcoffee.com",
+      "phone": "(571) 555-0101",
+      "logistics": {
+        "wifiSpeedDown": 150,
+        "wifiSpeedUp": 75,
+        "outletDensity": "plenty",
+        "noiseLevel": 65,
+        "seatingType": ["desk", "communal", "bar"],
+        "verifiedAt": "2026-02-20T10:00:00Z"
+      },
+      "vibe": {
+        "primary": "focus",
+        "tags": ["coffee", "food", "meeting-rooms"]
+      },
+      "hours": [
+        { "day": "Sunday", "open": "08:00", "close": "18:00" },
+        { "day": "Monday", "open": "06:30", "close": "19:00" },
+        { "day": "Tuesday", "open": "06:30", "close": "19:00" },
+        { "day": "Wednesday", "open": "06:30", "close": "19:00" },
+        { "day": "Thursday", "open": "06:30", "close": "20:00" },
+        { "day": "Friday", "open": "06:30", "close": "21:00" },
+        { "day": "Saturday", "open": "07:00", "close": "20:00" }
+      ],
+      "openLate": true,
+      "highSpeedWifi": true,
+      "laptopPolicy": "Laptops welcome all day",
+      "seo": {
+        "description": "Specialty coffee shop with fast Wi-Fi and dedicated work desks. Perfect for remote workers seeking a productive environment.",
+        "priceRange": " $$",
+        "rating": 4.5,
+        "reviewCount": 127
+      },
+      "images": {
+        "hero": "/images/blueprint-hero.jpg",
+        "gallery": ["/images/blueprint-1.jpg", "/images/blueprint-2.jpg"]
+      }
+    },
+    {
+      "id": "spot-002",
+      "name": "The Wireless Cowork",
+      "slug": "the-wireless-cowork",
+      "neighborhood": "alexandria",
+      "address": "500 King Street, Alexandria, VA 22314",
+      "googleMapsUrl": "https://maps.google.com/?q=The+Wireless+Cowork+Alexandria",
+      "website": "https://wirelesscowork.com",
+      "logistics": {
+        "wifiSpeedDown": 500,
+        "wifiSpeedUp": 250,
+        "outletDensity": "plenty",
+        "noiseLevel": 42,
+        "seatingType": ["desk", "communal"],
+        "verifiedAt": "2026-02-18T14:30:00Z"
+      },
+      "vibe": {
+        "primary": "quiet",
+        "tags": ["coffee", "meeting-rooms", "phone-booths"]
+      },
+      "hours": [
+        { "day": "Sunday", "open": null, "close": null },
+        { "day": "Monday", "open": "07:00", "close": "22:00" },
+        { "day": "Tuesday", "open": "07:00", "close": "22:00" },
+        { "day": "Wednesday", "open": "07:00", "close": "22:00" },
+        { "day": "Thursday", "open": "07:00", "close": "22:00" },
+        { "day": "Friday", "open": "07:00", "close": "22:00" },
+        { "day": "Saturday", "open": "09:00", "close": "18:00" }
+      ],
+      "openLate": true,
+      "highSpeedWifi": true,
+      "laptopPolicy": "Coworking space - laptops welcome",
+      "seo": {
+        "description": "Premium coworking space with gigabit internet, soundproof phone booths, and meeting rooms. Library-quiet environment.",
+        "priceRange": " $$$",
+        "rating": 4.8,
+        "reviewCount": 89
+      },
+      "images": {
+        "hero": "/images/wireless-hero.jpg"
+      }
+    },
+    {
+      "id": "spot-003",
+      "name": "Bean There Done That",
+      "slug": "bean-there-done-that",
+      "neighborhood": "tysons",
+      "address": "2001 International Drive, McLean, VA 22102",
+      "googleMapsUrl": "https://maps.google.com/?q=Bean+There+Done+That+Tysons",
+      "logistics": {
+        "wifiSpeedDown": 95,
+        "wifiSpeedUp": 45,
+        "outletDensity": "moderate",
+        "noiseLevel": 72,
+        "seatingType": ["couch", "communal", "outdoor"],
+        "verifiedAt": "2026-02-15T09:15:00Z"
+      },
+      "vibe": {
+        "primary": "social",
+        "tags": ["coffee", "food", "beer", "outdoor"]
+      },
+      "hours": [
+        { "day": "Sunday", "open": "09:00", "close": "17:00" },
+        { "day": "Monday", "open": "06:00", "close": "18:00" },
+        { "day": "Tuesday", "open": "06:00", "close": "18:00" },
+        { "day": "Wednesday", "open": "06:00", "close": "18:00" },
+        { "day": "Thursday", "open": "06:00", "close": "18:00" },
+        { "day": "Friday", "open": "06:00", "close": "21:00" },
+        { "day": "Saturday", "open": "07:00", "close": "19:00" }
+      ],
+      "openLate": false,
+      "highSpeedWifi": false,
+      "laptopPolicy": "Laptops welcome until 5pm on weekdays",
+      "seo": {
+        "description": "Lively coffee shop with a great brunch scene. Indoor/outdoor seating with decent Wi-Fi for casual work sessions.",
+        "priceRange": " $$",
+        "rating": 4.2,
+        "reviewCount": 203
+      },
+      "images": {
+        "hero": "/images/bean-hero.jpg"
+      }
+    },
+    {
+      "id": "spot-004",
+      "name": "Reston Roasters",
+      "slug": "reston-roasters",
+      "neighborhood": "reston",
+      "address": "11493 Sunset Hills Rd, Reston, VA 20190",
+      "googleMapsUrl": "https://maps.google.com/?q=Reston+Roasters",
+      "website": "https://restonroasters.com",
+      "phone": "(703) 555-0202",
+      "logistics": {
+        "wifiSpeedDown": 200,
+        "wifiSpeedUp": 100,
+        "outletDensity": "plenty",
+        "noiseLevel": 55,
+        "seatingType": ["desk", "bar", "communal"],
+        "verifiedAt": "2026-02-22T11:00:00Z"
+      },
+      "vibe": {
+        "primary": "focus",
+        "secondary": "lively",
+        "tags": ["coffee", "food", "beer", "live-music"]
+      },
+      "hours": [
+        { "day": "Sunday", "open": "07:00", "close": "20:00" },
+        { "day": "Monday", "open": "05:30", "close": "20:00" },
+        { "day": "Tuesday", "open": "05:30", "close": "20:00" },
+        { "day": "Wednesday", "open": "05:30", "close": "20:00" },
+        { "day": "Thursday", "open": "05:30", "close": "22:00" },
+        { "day": "Friday", "open": "05:30", "close": "23:00" },
+        { "day": "Saturday", "open": "06:00", "close": "22:00" }
+      ],
+      "openLate": true,
+      "highSpeedWifi": true,
+      "laptopPolicy": "Laptops welcome all day",
+      "seo": {
+        "description": "Early-opening roastery with blazing-fast Wi-Fi. Great for morning focus sessions, turns lively with live music on weekends.",
+        "priceRange": " $$",
+        "rating": 4.6,
+        "reviewCount": 156
+      },
+      "images": {
+        "hero": "/images/reston-hero.jpg"
+      }
+    },
+    {
+      "id": "spot-005",
+      "name": "Arlington Public Library - Central",
+      "slug": "arlington-central-library",
+      "neighborhood": "arlington",
+      "address": "1015 N Quincy St, Arlington, VA 22201",
+      "googleMapsUrl": "https://maps.google.com/?q=Arlington+Central+Library",
+      "logistics": {
+        "wifiSpeedDown": 100,
+        "wifiSpeedUp": 50,
+        "outletDensity": "moderate",
+        "noiseLevel": 35,
+        "seatingType": ["desk"],
+        "verifiedAt": "2026-02-19T16:00:00Z"
+      },
+      "vibe": {
+        "primary": "quiet",
+        "tags": ["free-wifi", "study-rooms", "printing"]
+      },
+      "hours": [
+        { "day": "Sunday", "open": "12:00", "close": "18:00" },
+        { "day": "Monday", "open": "10:00", "close": "20:00" },
+        { "day": "Tuesday", "open": "10:00", "close": "20:00" },
+        { "day": "Wednesday", "open": "10:00", "close": "20:00" },
+        { "day": "Thursday", "open": "10:00", "close": "20:00" },
+        { "day": "Friday", "open": "10:00", "close": "18:00" },
+        { "day": "Saturday", "open": "10:00", "close": "18:00" }
+      ],
+      "openLate": false,
+      "highSpeedWifi": true,
+      "laptopPolicy": "Laptops welcome - study rooms available",
+      "seo": {
+        "description": "Library-quiet public library with free high-speed Wi-Fi. Dedicated study rooms available. Perfect for deep focus work.",
+        "priceRange": " $",
+        "rating": 4.4,
+        "reviewCount": 312
+      },
+      "images": {
+        "hero": "/images/library-hero.jpg"
+      }
+    },
+    {
+      "id": "spot-006",
+      "name": "Northside Social",
+      "slug": "northside-social",
+      "neighborhood": "arlington",
+      "address": "3251 N 20th St, Arlington, VA 22206",
+      "googleMapsUrl": "https://maps.google.com/?q=Northside+Social+Arlington",
+      "website": "https://northsidesocial.com",
+      "phone": "(703) 888-2580",
+      "logistics": {
+        "wifiSpeedDown": 45,
+        "wifiSpeedUp": 15,
+        "outletDensity": "plenty",
+        "noiseLevel": 72,
+        "seatingType": ["couch", "communal", "bar"],
+        "verifiedAt": "2026-02-26T12:00:00Z"
+      },
+      "vibe": {
+        "primary": "social",
+        "tags": ["coffee", "wine", "food", "live-music", "upstairs-wine-bar"]
+      },
+      "hours": [
+        { "day": "Sunday", "open": "08:00", "close": "20:00" },
+        { "day": "Monday", "open": "06:30", "close": "20:00" },
+        { "day": "Tuesday", "open": "06:30", "close": "20:00" },
+        { "day": "Wednesday", "open": "06:30", "close": "20:00" },
+        { "day": "Thursday", "open": "06:30", "close": "22:00" },
+        { "day": "Friday", "open": "06:30", "close": "23:00" },
+        { "day": "Saturday", "open": "08:00", "close": "23:00" }
+      ],
+      "openLate": true,
+      "highSpeedWifi": false,
+      "laptopPolicy": "Upstairs wine bar: laptops OK | Downstairs cafe: laptops OK all day",
+      "expertTip": "Best outlet access at the communal table downstairs. Upstairs is better for meetings but fewer outlets.",
+      "seo": {
+        "description": "The king of NoVA work spots. Upstairs wine bar vs downstairs cafe - both laptop friendly but different vibes. Great community feel.",
+        "priceRange": " $$",
+        "rating": 4.4,
+        "reviewCount": 418
+      },
+      "images": {
+        "hero": "/images/northside-hero.jpg"
+      }
+    },
+    {
+      "id": "spot-007",
+      "name": "3DEN Tysons Corner",
+      "slug": "3den-tysons",
+      "neighborhood": "tysons",
+      "address": "Tysons Corner Center, 1961 Chain Bridge Rd, Tysons, VA 22102",
+      "googleMapsUrl": "https://maps.google.com/?q=3DEN+Tysons+Corner",
+      "website": "https://3den.co",
+      "logistics": {
+        "wifiSpeedDown": 200,
+        "wifiSpeedUp": 100,
+        "outletDensity": "plenty",
+        "noiseLevel": 55,
+        "seatingType": ["desk", "couch", "communal", "private-booths"],
+        "verifiedAt": "2026-02-26T14:00:00Z"
+      },
+      "vibe": {
+        "primary": "focus",
+        "tags": ["paid-lounge", "premium", "day-pass", "showers", "phone-booths"]
+      },
+      "hours": [
+        { "day": "Sunday", "open": "10:00", "close": "18:00" },
+        { "day": "Monday", "open": "07:00", "close": "21:00" },
+        { "day": "Tuesday", "open": "07:00", "close": "21:00" },
+        { "day": "Wednesday", "open": "07:00", "close": "21:00" },
+        { "day": "Thursday", "open": "07:00", "close": "21:00" },
+        { "day": "Friday", "open": "07:00", "close": "21:00" },
+        { "day": "Saturday", "open": "09:00", "close": "19:00" }
+      ],
+      "openLate": false,
+      "highSpeedWifi": true,
+      "laptopPolicy": "Full access - this IS a coworking lounge ($35/day or membership)",
+      "expertTip": "Worth every penny for the fiber-speed WiFi and unlimited coffee. Best for important calls.",
+      "seo": {
+        "description": "Paid lounge inside Tysons Mall. Is 3DEN worth it? Yes for fiber-speed WiFi and professional environment. Day passes available.",
+        "priceRange": " $$$",
+        "rating": 4.7,
+        "reviewCount": 156
+      },
+      "images": {
+        "hero": "/images/3den-hero.jpg"
+      }
+    },
+    {
+      "id": "spot-008",
+      "name": "Misha's Coffee",
+      "slug": "mishas-coffee-alexandria",
+      "neighborhood": "alexandria",
+      "address": "717 King St, Alexandria, VA 22314",
+      "googleMapsUrl": "https://maps.google.com/?q=Mishas+Coffee",
+      "website": "https://mishascoffee.com",
+      "phone": "(703) 548-8080",
+      "logistics": {
+        "wifiSpeedDown": 30,
+        "wifiSpeedUp": 10,
+        "outletDensity": "sparse",
+        "noiseLevel": 68,
+        "seatingType": ["communal", "couch"],
+        "verifiedAt": "2026-02-26T11:00:00Z"
+      },
+      "vibe": {
+        "primary": "social",
+        "tags": ["coffee", "historic", "beautiful", "communal-table"]
+      },
+      "hours": [
+        { "day": "Sunday", "open": "08:00", "close": "18:00" },
+        { "day": "Monday", "open": "07:00", "close": "18:00" },
+        { "day": "Tuesday", "open": "07:00", "close": "18:00" },
+        { "day": "Wednesday", "open": "07:00", "close": "18:00" },
+        { "day": "Thursday", "open": "07:00", "close": "18:00" },
+        { "day": "Friday", "open": "07:00", "close": "19:00" },
+        { "day": "Saturday", "open": "08:00", "close": "19:00" }
+      ],
+      "openLate": false,
+      "highSpeedWifi": false,
+      "laptopPolicy": "Laptops welcome but very limited seating - arrive early",
+      "expertTip": "The big communal table has 2 outlets. Get there before 9am on weekends to claim a spot.",
+      "seo": {
+        "description": "Beautiful historic Old Town coffee spot but notoriously hard to find a seat. People search for 'Misha's Coffee outlet locations' - answer: communal table only.",
+        "priceRange": " $$",
+        "rating": 4.3,
+        "reviewCount": 534
+      },
+      "images": {
+        "hero": "/images/mishas-hero.jpg"
+      }
+    },
+    {
+      "id": "spot-009",
+      "name": "Caboose Commons",
+      "slug": "caboose-commons",
+      "neighborhood": "tysons",
+      "address": "2985 District Ave, Fairfax, VA 22031",
+      "googleMapsUrl": "https://maps.google.com/?q=Caboose+Commons+Fairfax",
+      "website": "https://caboosecommons.com",
+      "logistics": {
+        "wifiSpeedDown": 150,
+        "wifiSpeedUp": 75,
+        "outletDensity": "plenty",
+        "noiseLevel": 58,
+        "seatingType": ["desk", "communal", "couch", "outdoor"],
+        "verifiedAt": "2026-02-26T09:00:00Z"
+      },
+      "vibe": {
+        "primary": "focus",
+        "tags": ["coffee", "food", "3-floors", "long-sessions", "beer"]
+      },
+      "hours": [
+        { "day": "Sunday", "open": "08:00", "close": "18:00" },
+        { "day": "Monday", "open": "07:00", "close": "20:00" },
+        { "day": "Tuesday", "open": "07:00", "close": "20:00" },
+        { "day": "Wednesday", "open": "07:00", "close": "20:00" },
+        { "day": "Thursday", "open": "07:00", "close": "21:00" },
+        { "day": "Friday", "open": "07:00", "close": "22:00" },
+        { "day": "Saturday", "open": "08:00", "close": "21:00" }
+      ],
+      "openLate": true,
+      "highSpeedWifi": true,
+      "laptopPolicy": "Laptops welcome all day - 3 floors of seating",
+      "expertTip": "3 floors of seating. Best bandwidth for 4+ hour sessions. Top floor is quietest.",
+      "seo": {
+        "description": "3 floors of seating with massive Wi-Fi bandwidth. Perfect for long work sessions. Great for 4+ hour deep work.",
+        "priceRange": " $$",
+        "rating": 4.5,
+        "reviewCount": 234
+      },
+      "images": {
+        "hero": "/images/caboose-hero.jpg"
+      }
+    },
+    {
+      "id": "spot-010",
+      "name": "Kaldi's Social House",
+      "slug": "kaldic-social-house",
+      "neighborhood": "arlington",
+      "address": "4044 Wilson Blvd, Arlington, VA 22203",
+      "googleMapsUrl": "https://maps.google.com/?q=Kaldis+Social+House+Arlington",
+      "logistics": {
+        "wifiSpeedDown": 60,
+        "wifiSpeedUp": 25,
+        "outletDensity": "moderate",
+        "noiseLevel": 62,
+        "seatingType": ["couch", "communal", "bar"],
+        "verifiedAt": "2026-02-26T10:00:00Z"
+      },
+      "vibe": {
+        "primary": "social",
+        "tags": ["coffee", "quiet-morning", "social-afternoon", "vibe-shift"]
+      },
+      "hours": [
+        { "day": "Sunday", "open": "08:00", "close": "17:00" },
+        { "day": "Monday", "open": "06:30", "close": "19:00" },
+        { "day": "Tuesday", "open": "06:30", "close": "19:00" },
+        { "day": "Wednesday", "open": "06:30", "close": "19:00" },
+        { "day": "Thursday", "open": "06:30", "close": "20:00" },
+        { "day": "Friday", "open": "06:30", "close": "21:00" },
+        { "day": "Saturday", "open": "07:00", "close": "19:00" }
+      ],
+      "openLate": false,
+      "highSpeedWifi": false,
+      "laptopPolicy": "Laptops welcome 6:30am-11am (quiet time). Gets social after 1pm.",
+      "expertTip": "Vibe shift: Extremely quiet 8am-11am. Vibe shifts to social hub after 1pm - not ideal for calls then. Open until 10pm on Fri/Sat.",
+      "seo": {
+        "description": "Vibe shift: Extremely quiet 8am-11am for deep work. Turns into social hub after 1pm. Perfect morning spot.",
+        "priceRange": " $$",
+        "rating": 4.2,
+        "reviewCount": 189
+      },
+      "images": {
+        "hero": "/images/kaldis-hero.jpg"
+      }
+    },
+    {
+      "id": "spot-011",
+      "name": "Tysons Galleria Food Court (3rd Floor)",
+      "slug": "tysons-galleria-third-floor",
+      "neighborhood": "tysons",
+      "address": "2001 International Dr, McLean, VA 22102",
+      "googleMapsUrl": "https://maps.google.com/?q=Tysons+Galleria+Food+Court",
+      "logistics": {
+        "wifiSpeedDown": 25,
+        "wifiSpeedUp": 10,
+        "outletDensity": "sparse",
+        "noiseLevel": 55,
+        "seatingType": ["communal"],
+        "verifiedAt": "2026-02-26T11:00:00Z"
+      },
+      "vibe": {
+        "primary": "quiet",
+        "tags": ["free-wifi", "hidden-gem", "mall", "seating"]
+      },
+      "hours": [
+        { "day": "Sunday", "open": "11:00", "close": "18:00" },
+        { "day": "Monday", "open": "10:00", "close": "21:00" },
+        { "day": "Tuesday", "open": "10:00", "close": "21:00" },
+        { "day": "Wednesday", "open": "10:00", "close": "21:00" },
+        { "day": "Thursday", "open": "10:00", "close": "21:00" },
+        { "day": "Friday", "open": "10:00", "close": "21:00" },
+        { "day": "Saturday", "open": "10:00", "close": "19:00" }
+      ],
+      "openLate": false,
+      "highSpeedWifi": false,
+      "laptopPolicy": "Free - no restrictions but limited outlets",
+      "expertTip": "Hidden free office near theater. Wi-Fi password usually on the pickup board. Very quiet.",
+      "seo": {
+        "description": "The hidden free office at Tysons Galleria. High-end seating near the theater. Super quiet mall space.",
+        "priceRange": " $",
+        "rating": 3.8,
+        "reviewCount": 67
+      },
+      "images": {
+        "hero": "/images/galleria-hero.jpg"
+      }
+    },
+    {
+      "id": "spot-012",
+      "name": "Three Whistles",
+      "slug": "three-whistles",
+      "neighborhood": "arlington",
+      "address": "2700 N Sycamore St, Arlington, VA 22205",
+      "googleMapsUrl": "https://maps.google.com/?q=Three+Whistles+Arlington",
+      "website": "https://threewhistlesbar.com",
+      "logistics": {
+        "wifiSpeedDown": 75,
+        "wifiSpeedUp": 30,
+        "outletDensity": "moderate",
+        "noiseLevel": 65,
+        "seatingType": ["communal", "bar", "outdoor"],
+        "verifiedAt": "2026-02-26T12:00:00Z"
+      },
+      "vibe": {
+        "primary": "social",
+        "tags": ["coffee", "beer", "coworking-zone", "fee"]
+      },
+      "hours": [
+        { "day": "Sunday", "open": "10:00", "close": "18:00" },
+        { "day": "Monday", "open": "07:00", "close": "22:00" },
+        { "day": "Tuesday", "open": "07:00", "close": "22:00" },
+        { "day": "Wednesday", "open": "07:00", "close": "22:00" },
+        { "day": "Thursday", "open": "07:00", "close": "23:00" },
+        { "day": "Friday", "open": "07:00", "close": "23:00" },
+        { "day": "Saturday", "open": "09:00", "close": "23:00" }
+      ],
+      "openLate": true,
+      "highSpeedWifi": false,
+      "laptopPolicy": "Dedicated 'Work Zone' with fee ($15/day), front cafe is free",
+      "expertTip": "Back 'Work Zone' requires entry fee but has dedicated desks. Front cafe area is free but gets busy.",
+      "seo": {
+        "description": "Dedicated coworking zone available ($15/day). Front cafe is free. Great for switching between work and drinks.",
+        "priceRange": " $$",
+        "rating": 4.1,
+        "reviewCount": 145
+      },
+      "images": {
+        "hero": "/images/threewhistles-hero.jpg"
+      }
+    }
+  ]
+}
