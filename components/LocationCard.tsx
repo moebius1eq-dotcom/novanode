@@ -6,13 +6,15 @@ import { WorkSpot } from "@/lib/types";
 import { NEIGHBORHOODS } from "@/lib/constants";
 import LogisticsCard from "./LogisticsCard";
 import VibeIndicator from "./VibeIndicator";
+import { trackMonetizationEvent } from "@/lib/analytics";
 
 interface LocationCardProps {
   spot: WorkSpot;
   showCompare?: boolean;
+  featuredLabel?: string;
 }
 
-export default function LocationCard({ spot, showCompare = false }: LocationCardProps) {
+export default function LocationCard({ spot, showCompare = false, featuredLabel }: LocationCardProps) {
   const [isSelectedForCompare, setIsSelectedForCompare] = useState(false);
 
   // Sync with localStorage for comparison
@@ -48,6 +50,17 @@ export default function LocationCard({ spot, showCompare = false }: LocationCard
     <Link 
       href={`/location/${spot.neighborhood}/${spot.slug}`}
       className="location-card group relative"
+      onClick={() => {
+        if (featuredLabel) {
+          trackMonetizationEvent({
+            type: "featured_spot_click",
+            spotId: spot.id,
+            spotSlug: spot.slug,
+            neighborhood: spot.neighborhood,
+            meta: { featuredLabel },
+          });
+        }
+      }}
     >
       {/* Compare Checkbox */}
       {showCompare && (
@@ -71,7 +84,12 @@ export default function LocationCard({ spot, showCompare = false }: LocationCard
         <span className="text-6xl">☕</span>
         
         {/* Vibe Badge Overlay */}
-        <div className="absolute top-3 right-3">
+        <div className="absolute top-3 right-3 flex flex-col items-end gap-2">
+          {featuredLabel ? (
+            <span className="px-2 py-1 rounded bg-amber-500/90 text-white text-[10px] font-semibold uppercase tracking-wide">
+              {featuredLabel}
+            </span>
+          ) : null}
           <VibeIndicator vibe={spot.vibe.primary} size="sm" />
         </div>
         

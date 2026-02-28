@@ -9,7 +9,12 @@ import VibeIndicator from "@/components/VibeIndicator";
 import AmenitiesChecklist from "@/components/AmenitiesChecklist";
 import CommunityStatus from "@/components/CommunityStatus";
 import CommunitySpeedTrend from "@/components/CommunitySpeedTrend";
+import SeatStatusReporter from "@/components/SeatStatusReporter";
 import SpeedTest from "@/components/SpeedTest";
+import PartnerDayPassCTA from "@/components/PartnerDayPassCTA";
+import OutletAffiliateCard from "@/components/OutletAffiliateCard";
+import { getAcousticLabel, getMeetingReadyScore, getWorkMoodTags } from "@/lib/environment";
+import { shouldShowDayPassPartner, shouldShowOutletAffiliate } from "@/lib/monetization";
 
 // Static params for all locations (for static export)
 export async function generateStaticParams() {
@@ -133,6 +138,10 @@ export default async function LocationPage({
   
   const localBusinessJsonLd = generateLocalBusinessJsonLd(spot);
   const reviewJsonLd = generateReviewJsonLd(spot);
+
+  const workMoodTags = getWorkMoodTags(spot);
+  const meetingReadyScore = getMeetingReadyScore(spot);
+  const acousticLabel = getAcousticLabel(spot);
 
   const compareCandidates = spots
     .filter((s) => s.slug !== spot.slug)
@@ -293,6 +302,25 @@ export default async function LocationPage({
               {/* Amenities Checklist */}
               <AmenitiesChecklist spot={spot} />
 
+              {/* Vibe & Environment */}
+              <div className="bg-white rounded-xl p-6 border border-slate-200">
+                <h3 className="font-semibold text-slate-900 mb-3">🌿 Vibe & Environment</h3>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {workMoodTags.map((tag) => (
+                    <span key={tag} className="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs rounded-full">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <p className="text-sm text-slate-700 mb-2">
+                  Meeting-ready score: <strong>{meetingReadyScore}/5</strong>
+                </p>
+                <p className="text-sm text-slate-600">Acoustics: {acousticLabel}</p>
+              </div>
+
+              {/* Live seat status */}
+              <SeatStatusReporter spotId={spot.id} />
+
               {/* Community speed trend */}
               <CommunitySpeedTrend spotId={spot.id} />
 
@@ -340,6 +368,10 @@ export default async function LocationPage({
                 </div>
               )}
               
+              {/* Monetization blocks */}
+              {shouldShowDayPassPartner(spot) && <PartnerDayPassCTA spot={spot} />}
+              {shouldShowOutletAffiliate(spot) && <OutletAffiliateCard spot={spot} />}
+
               {/* Compare Links */}
               {compareCandidates.length > 0 && (
                 <div className="bg-white rounded-xl p-6 border border-slate-200">

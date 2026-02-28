@@ -4,7 +4,7 @@ import spotsData from "@/data/spots.json";
 import { WorkSpot, Neighborhood } from "@/lib/types";
 import { NEIGHBORHOODS } from "@/lib/constants";
 import SearchBar from "@/components/SearchBar";
-import LocationCard from "@/components/LocationCard";
+import HomeExplore from "@/components/HomeExplore";
 
 export const metadata: Metadata = {
   title: "NoVaNode | Remote Work Spots in Northern Virginia",
@@ -123,26 +123,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Featured Spots - Pre-rendered for SEO */}
+      {/* Explore Spots (List + Map Toggle) */}
       <section className="py-12 px-4 bg-white">
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-            <div>
-              <h2 className="text-2xl font-bold text-slate-900">
-                All Locations
-              </h2>
-              <p className="text-slate-500">
-                {spots.length} spots • Pre-rendered for instant loading
-              </p>
-            </div>
-          </div>
-
-          {/* Server-rendered grid - NO loading state! */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {spots.map((spot) => (
-              <LocationCard key={spot.id} spot={spot} />
-            ))}
-          </div>
+          <HomeExplore spots={spots} />
         </div>
       </section>
 
