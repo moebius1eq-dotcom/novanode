@@ -1,12 +1,9 @@
 import { Metadata } from "next";
-import Link from "next/link";
 import spotsData from "@/data/spots.json";
-import { WorkSpot, Neighborhood } from "@/lib/types";
-import { NEIGHBORHOODS } from "@/lib/constants";
+import { WorkSpot } from "@/lib/types";
 import SearchBar from "@/components/SearchBar";
 import HomeExplore from "@/components/HomeExplore";
-import NewsletterSignup from "@/components/NewsletterSignup";
-import NeighborhoodPushSubscribe from "@/components/NeighborhoodPushSubscribe";
+import HomeSecondarySections from "@/components/HomeSecondarySections";
 
 export const metadata: Metadata = {
   title: "NoVaNode | Remote Work Spots in Northern Virginia",
@@ -89,40 +86,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Retention Modules */}
-      <section className="py-12 px-4 bg-slate-50 border-t border-slate-200">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-5">
-          <NeighborhoodPushSubscribe />
-          <NewsletterSignup />
-        </div>
-      </section>
-
-      {/* Neighborhood Quick Links */}
-      <section className="py-12 px-4 bg-slate-50">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-2xl font-bold text-slate-900 mb-6 text-center">
-            Explore by Neighborhood
-          </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {Object.entries(NEIGHBORHOODS).map(([slug, name]) => {
-              const count = spots.filter(s => s.neighborhood === slug).length;
-              return (
-                <Link
-                  key={slug}
-                  href={`/neighborhood/${slug}`}
-                  className="bg-white p-6 rounded-xl border border-slate-200 hover:shadow-md transition-all text-center"
-                >
-                  <span className="text-3xl mb-2 block">
-                    {slug === 'arlington' ? '🏙️' : slug === 'alexandria' ? '🏛️' : slug === 'tysons' ? '🛍️' : '🌳'}
-                  </span>
-                  <h3 className="font-semibold text-slate-900">{name}</h3>
-                  <p className="text-sm text-slate-500">{count} spots</p>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+      <HomeSecondarySections spots={spots} />
     </div>
     </>
   );
