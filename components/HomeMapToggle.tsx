@@ -31,13 +31,13 @@ function hashOffset(slug: string) {
   return [lat, lng] as const;
 }
 
-function MapResizeFix() {
+function MapResizeFix({ trigger }: { trigger: string }) {
   const map = useMap();
 
   useEffect(() => {
-    const id = setTimeout(() => map.invalidateSize(), 120);
+    const id = setTimeout(() => map.invalidateSize(), 150);
     return () => clearTimeout(id);
-  }, [map]);
+  }, [map, trigger]);
 
   return null;
 }
@@ -104,10 +104,19 @@ export default function HomeMapToggle({ spots }: HomeMapToggleProps) {
         </>
       ) : (
         <div className="space-y-3">
-          <p className="text-slate-500 text-sm">Switch to Map View to explore clusters by neighborhood and transit corridors.</p>
+          <div className="text-sm text-slate-600 space-y-1">
+            <p><strong>What this map shows:</strong> spot clusters by neighborhood.</p>
+            <p>Blue pins = 100+ Mbps verified. Gray pins = under 100 Mbps.</p>
+            <p className="text-xs text-slate-500">Note: pin locations are approximate neighborhood placement for now.</p>
+          </div>
           <div className="h-[520px] rounded-xl overflow-hidden border border-slate-200">
-            <MapContainer key={view} center={[38.89, -77.19]} zoom={10.5} style={{ height: "100%", width: "100%" }}>
-              <MapResizeFix />
+            <MapContainer
+              center={[38.89, -77.19]}
+              zoom={10.5}
+              scrollWheelZoom={false}
+              style={{ height: "100%", width: "100%" }}
+            >
+              <MapResizeFix trigger={view} />
               <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
