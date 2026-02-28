@@ -8,6 +8,8 @@ import LogisticsCard from "@/components/LogisticsCard";
 import VibeIndicator from "@/components/VibeIndicator";
 import AmenitiesChecklist from "@/components/AmenitiesChecklist";
 import CommunityStatus from "@/components/CommunityStatus";
+import CommunitySpeedTrend from "@/components/CommunitySpeedTrend";
+import SpeedTest from "@/components/SpeedTest";
 
 // Static params for all locations (for static export)
 export async function generateStaticParams() {
@@ -290,6 +292,12 @@ export default async function LocationPage({
               
               {/* Amenities Checklist */}
               <AmenitiesChecklist spot={spot} />
+
+              {/* Community speed trend */}
+              <CommunitySpeedTrend spotId={spot.id} />
+
+              {/* Live Speed Test */}
+              <SpeedTest spot={spot} />
               
               {/* Quick Info */}
               <div className="bg-white rounded-xl p-6 border border-slate-200">
