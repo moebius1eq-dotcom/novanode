@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import spotsData from "@/data/spots.json";
 import { WorkSpot, LocalBusinessSchema, ReviewSchema } from "@/lib/types";
@@ -130,6 +131,21 @@ export default async function LocationPage({
   
   const localBusinessJsonLd = generateLocalBusinessJsonLd(spot);
   const reviewJsonLd = generateReviewJsonLd(spot);
+
+  const compareCandidates = spots
+    .filter((s) => s.slug !== spot.slug)
+    .sort((a, b) => {
+      const sameNeighborhoodA = a.neighborhood === spot.neighborhood ? 0 : 1;
+      const sameNeighborhoodB = b.neighborhood === spot.neighborhood ? 0 : 1;
+      if (sameNeighborhoodA !== sameNeighborhoodB) {
+        return sameNeighborhoodA - sameNeighborhoodB;
+      }
+
+      const wifiDeltaA = Math.abs(a.logistics.wifiSpeedDown - spot.logistics.wifiSpeedDown);
+      const wifiDeltaB = Math.abs(b.logistics.wifiSpeedDown - spot.logistics.wifiSpeedDown);
+      return wifiDeltaA - wifiDeltaB;
+    })
+    .slice(0, 3);
   
   // Format today's hours
   const today = new Date().getDay();
@@ -316,6 +332,28 @@ export default async function LocationPage({
                 </div>
               )}
               
+              {/* Compare Links */}
+              {compareCandidates.length > 0 && (
+                <div className="bg-white rounded-xl p-6 border border-slate-200">
+                  <h3 className="font-semibold text-slate-900 mb-3">⚖️ Compare this spot</h3>
+                  <div className="space-y-2">
+                    {compareCandidates.map((candidate) => {
+                      const slugs = [spot.slug, candidate.slug].sort((a, b) => a.localeCompare(b));
+                      const pair = `${slugs[0]}-vs-${slugs[1]}`;
+                      return (
+                        <Link
+                          key={candidate.id}
+                          href={`/compare/${pair}`}
+                          className="block text-sm text-indigo-600 hover:text-indigo-700 hover:underline"
+                        >
+                          {spot.name} vs {candidate.name}
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
               {/* Actions */}
               <div className="bg-white rounded-xl p-6 border border-slate-200 space-y-3">
                 <a 
