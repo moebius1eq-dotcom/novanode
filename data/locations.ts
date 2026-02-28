@@ -18,9 +18,12 @@ export interface SeedLocation {
   weekendFriendly: boolean;
   highSpeedWifi: boolean;
   openLate: boolean;
-  // New E-E-A-T fields
+  // E-E-A-T fields
   lastVerified: string;
   parkingInfo: string;
+  // Phase 3 fields
+  metroWalk?: number; // minutes walk from metro
+  evCharging?: boolean;
 }
 
 export const POWER_SPOTS: SeedLocation[] = [
@@ -43,6 +46,8 @@ export const POWER_SPOTS: SeedLocation[] = [
     openLate: true,
     lastVerified: "Feb 27, 2026",
     parkingInfo: "Free garage parking - enter from District Ave",
+    metroWalk: 8,
+    evCharging: true,
   },
   {
     id: "northside-social",
@@ -63,6 +68,8 @@ export const POWER_SPOTS: SeedLocation[] = [
     openLate: true,
     lastVerified: "Feb 27, 2026",
     parkingInfo: "Street parking - metered until 9 PM, free on Sundays",
+    metroWalk: 5,
+    evCharging: false,
   },
   {
     id: "3den-tysons",
@@ -83,6 +90,8 @@ export const POWER_SPOTS: SeedLocation[] = [
     openLate: false,
     lastVerified: "Feb 27, 2026",
     parkingInfo: "Free validation at mall garage - ask front desk",
+    metroWalk: 12,
+    evCharging: true,
   },
   {
     id: "mishas-coffee",
@@ -103,6 +112,8 @@ export const POWER_SPOTS: SeedLocation[] = [
     openLate: false,
     lastVerified: "Feb 27, 2026",
     parkingInfo: "Street parking only - difficult on weekends",
+    metroWalk: 10,
+    evCharging: false,
   },
   {
     id: "capital-one-hall",
@@ -123,6 +134,8 @@ export const POWER_SPOTS: SeedLocation[] = [
     openLate: true,
     lastVerified: "Feb 27, 2026",
     parkingInfo: "Free garage parking - best in Tysons",
+    metroWalk: 15,
+    evCharging: true,
   },
 ];
 
@@ -139,6 +152,13 @@ export function getSpotBySlug(slug: string): SeedLocation | undefined {
 // Helper to get weekend-friendly spots only
 export function getWeekendFriendlySpots(): SeedLocation[] {
   return POWER_SPOTS.filter(spot => spot.weekendFriendly);
+}
+
+// Helper to get nearby spots (within same neighborhood, excluding current)
+export function getNearbySpots(currentSlug: string, neighborhood: string, limit: number = 3): SeedLocation[] {
+  return POWER_SPOTS
+    .filter(spot => spot.neighborhood === neighborhood && spot.slug !== currentSlug)
+    .slice(0, limit);
 }
 
 // Generate JSON-LD Schema for a spot
@@ -178,6 +198,16 @@ export function generateLocalBusinessSchema(spot: SeedLocation, baseUrl: string 
         "@type": "LocationFeatureSpecification",
         name: "Weekend Laptop Friendly",
         value: spot.weekendFriendly ? "Yes - laptops welcome on weekends" : "No - restricted weekend policy",
+      },
+      {
+        "@type": "LocationFeatureSpecification",
+        name: "Metro Walk",
+        value: spot.metroWalk ? `${spot.metroWalk} min walk` : "N/A",
+      },
+      {
+        "@type": "LocationFeatureSpecification",
+        name: "EV Charging",
+        value: spot.evCharging ? "Available (Level 2)" : "Not available",
       },
       {
         "@type": "LocationFeatureSpecification",
