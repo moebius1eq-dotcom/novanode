@@ -17,7 +17,11 @@ export default function ModerationAdminPage() {
 
   useEffect(() => {
     (async () => {
-      const res = await fetch("/api/admin/moderation", { cache: "no-store" });
+      const token = new URLSearchParams(window.location.search).get("token");
+      const res = await fetch(`/api/admin/moderation${token ? `?token=${encodeURIComponent(token)}` : ""}`, {
+        cache: "no-store",
+        headers: token ? { "x-admin-token": token } : {},
+      });
       if (!res.ok) return;
       const json = await res.json() as { total: number; high: number; medium: number; items: Item[] };
       setItems(json.items);
