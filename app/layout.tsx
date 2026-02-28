@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import StickyFilterBar from "@/components/StickyFilterBar";
 
 export const metadata: Metadata = {
   title: "NoVaNode | Remote Work Spots in Northern Virginia",
@@ -26,9 +27,10 @@ export default function RootLayout({
       <meta name="google-site-verification" content="6mMLUhUdFGop4Fzh9_0nVyL85KJ_FvI6MIrOujCJwzs" />
       <body className="min-h-screen flex flex-col">
         <Navbar />
-        <main className="flex-1">
+        <main className="flex-1 pb-20">
           {children}
         </main>
+        <StickyFilterBar />
         <Footer />
       </body>
     </html>
