@@ -1,8 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { MapContainer, TileLayer, CircleMarker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, CircleMarker, Popup, useMap } from "react-leaflet";
 import { WorkSpot } from "@/lib/types";
 import { NEIGHBORHOODS } from "@/lib/constants";
 import LocationCard from "@/components/LocationCard";
@@ -29,6 +29,17 @@ function hashOffset(slug: string) {
   const lat = ((hash % 1000) / 1000) * 0.03 - 0.015;
   const lng = (((hash >> 8) % 1000) / 1000) * 0.03 - 0.015;
   return [lat, lng] as const;
+}
+
+function MapResizeFix() {
+  const map = useMap();
+
+  useEffect(() => {
+    const id = setTimeout(() => map.invalidateSize(), 120);
+    return () => clearTimeout(id);
+  }, [map]);
+
+  return null;
 }
 
 export default function HomeMapToggle({ spots }: HomeMapToggleProps) {
@@ -95,7 +106,8 @@ export default function HomeMapToggle({ spots }: HomeMapToggleProps) {
         <div className="space-y-3">
           <p className="text-slate-500 text-sm">Switch to Map View to explore clusters by neighborhood and transit corridors.</p>
           <div className="h-[520px] rounded-xl overflow-hidden border border-slate-200">
-            <MapContainer center={[38.89, -77.19]} zoom={10.5} style={{ height: "100%", width: "100%" }}>
+            <MapContainer key={view} center={[38.89, -77.19]} zoom={10.5} style={{ height: "100%", width: "100%" }}>
+              <MapResizeFix />
               <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
