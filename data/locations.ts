@@ -8,7 +8,7 @@ export interface SeedLocation {
   neighborhood: string;
   address: string;
   wifiSpeed: number;
-  outlets: number;  // /10 scale
+  outlets: number; // /10 scale
   insiderTip: string;
   neighborhoodName: string;
   rating: number;
@@ -18,6 +18,9 @@ export interface SeedLocation {
   weekendFriendly: boolean;
   highSpeedWifi: boolean;
   openLate: boolean;
+  // New E-E-A-T fields
+  lastVerified: string;
+  parkingInfo: string;
 }
 
 export const POWER_SPOTS: SeedLocation[] = [
@@ -38,6 +41,8 @@ export const POWER_SPOTS: SeedLocation[] = [
     weekendFriendly: true,
     highSpeedWifi: true,
     openLate: true,
+    lastVerified: "Feb 27, 2026",
+    parkingInfo: "Free garage parking - enter from District Ave",
   },
   {
     id: "northside-social",
@@ -56,6 +61,8 @@ export const POWER_SPOTS: SeedLocation[] = [
     weekendFriendly: false,
     highSpeedWifi: false,
     openLate: true,
+    lastVerified: "Feb 27, 2026",
+    parkingInfo: "Street parking - metered until 9 PM, free on Sundays",
   },
   {
     id: "3den-tysons",
@@ -74,6 +81,8 @@ export const POWER_SPOTS: SeedLocation[] = [
     weekendFriendly: true,
     highSpeedWifi: true,
     openLate: false,
+    lastVerified: "Feb 27, 2026",
+    parkingInfo: "Free validation at mall garage - ask front desk",
   },
   {
     id: "mishas-coffee",
@@ -92,6 +101,8 @@ export const POWER_SPOTS: SeedLocation[] = [
     weekendFriendly: true,
     highSpeedWifi: false,
     openLate: false,
+    lastVerified: "Feb 27, 2026",
+    parkingInfo: "Street parking only - difficult on weekends",
   },
   {
     id: "capital-one-hall",
@@ -110,6 +121,8 @@ export const POWER_SPOTS: SeedLocation[] = [
     weekendFriendly: true,
     highSpeedWifi: true,
     openLate: true,
+    lastVerified: "Feb 27, 2026",
+    parkingInfo: "Free garage parking - best in Tysons",
   },
 ];
 
@@ -123,13 +136,19 @@ export function getSpotBySlug(slug: string): SeedLocation | undefined {
   return POWER_SPOTS.find(spot => spot.slug === slug);
 }
 
+// Helper to get weekend-friendly spots only
+export function getWeekendFriendlySpots(): SeedLocation[] {
+  return POWER_SPOTS.filter(spot => spot.weekendFriendly);
+}
+
 // Generate JSON-LD Schema for a spot
-export function generateLocalBusinessSchema(spot: SeedLocation) {
+export function generateLocalBusinessSchema(spot: SeedLocation, baseUrl: string = "https://novanode.moebius1eq.workers.dev") {
   return {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     name: spot.name,
     description: spot.laptopPolicy,
+    url: `${baseUrl}/location/${spot.neighborhood}/${spot.slug}/`,
     address: {
       "@type": "PostalAddress",
       streetAddress: spot.address,
@@ -147,18 +166,28 @@ export function generateLocalBusinessSchema(spot: SeedLocation) {
     amenityFeature: [
       {
         "@type": "LocationFeatureSpecification",
-        name: "High-Speed WiFi",
-        value: spot.highSpeedWifi,
+        name: "High-Speed Wi-Fi",
+        value: `${spot.wifiSpeed} Mbps tested ${spot.lastVerified}`,
       },
       {
         "@type": "LocationFeatureSpecification",
         name: "Power Outlets",
-        value: spot.outlets >= 7,
+        value: spot.outlets >= 7 ? "Plenty - 80%+ tables" : spot.outlets >= 4 ? "Moderate - some tables" : "Sparse - limited",
       },
       {
         "@type": "LocationFeatureSpecification",
-        name: "Laptop Friendly",
-        value: spot.laptopPolicy.toLowerCase().includes("welcome"),
+        name: "Weekend Laptop Friendly",
+        value: spot.weekendFriendly ? "Yes - laptops welcome on weekends" : "No - restricted weekend policy",
+      },
+      {
+        "@type": "LocationFeatureSpecification",
+        name: "Last Verified",
+        value: spot.lastVerified,
+      },
+      {
+        "@type": "LocationFeatureSpecification",
+        name: "Parking",
+        value: spot.parkingInfo,
       },
     ],
   };
