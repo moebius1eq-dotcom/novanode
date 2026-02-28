@@ -1,0 +1,49 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
+interface VibeItem {
+  url: string;
+  createdAt: string;
+}
+
+export default function VibeGallery({ spotId }: { spotId: string }) {
+  const [item, setItem] = useState<VibeItem | null>(null);
+  const [status, setStatus] = useState("");
+
+  async function load() {
+    const res = await fetch(`/api/vibe-photo?spotId=${encodeURIComponent(spotId)}`, { cache: "no-store" });
+    if (res.ok) {
+      const json = (await res.json()) as { items: VibeItem[] };
+      setItem(json.items[0] ?? null);
+    }
+  }
+
+  useEffect(() => {
+    load();
+  }, [spotId]);
+
+  async function upload(file: File) {
+    setStatus("Uploading…");
+    const form = new FormData();
+    form.append("spotId", spotId);
+    form.append("file", file);
+    const res = await fetch("/api/vibe-photo", { method: "POST", body: form });
+    setStatus(res.ok ? "Uploaded current vibe photo." : "Upload failed.");
+    if (res.ok) load();
+  }
+
+  return (
+    <div className="bg-white rounded-xl p-6 border border-slate-200">
+      <h3 className="font-semibold text-slate-900 mb-2">📸 Current Vibe Gallery</h3>
+      <p className="text-sm text-slate-600 mb-3">Upload one no-login vibe photo for this spot.</p>
+      {item ? (
+        <img src={item.url} alt="Current vibe" className="w-full h-40 object-cover rounded-lg border border-slate-200 mb-3" />
+      ) : (
+        <div className="w-full h-40 rounded-lg border border-dashed border-slate-300 mb-3 flex items-center justify-center text-sm text-slate-500">No vibe photo yet</div>
+      )}
+      <input type="file" accept="image/*" onChange={(e) => e.target.files?.[0] && upload(e.target.files[0])} className="text-sm" />
+      {status && <p className="mt-2 text-xs text-slate-500">{status}</p>}
+    </div>
+  );
+}

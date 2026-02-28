@@ -13,8 +13,12 @@ import SeatStatusReporter from "@/components/SeatStatusReporter";
 import SpeedTest from "@/components/SpeedTest";
 import PartnerDayPassCTA from "@/components/PartnerDayPassCTA";
 import OutletAffiliateCard from "@/components/OutletAffiliateCard";
+import VibeGallery from "@/components/VibeGallery";
+import SentimentSnippet from "@/components/SentimentSnippet";
+import WorkBuddyToggle from "@/components/WorkBuddyToggle";
 import { getAcousticLabel, getMeetingReadyScore, getWorkMoodTags } from "@/lib/environment";
 import { shouldShowDayPassPartner, shouldShowOutletAffiliate } from "@/lib/monetization";
+import { VERIFIED_RESIDENT_TIPS } from "@/lib/residents";
 
 // Static params for all locations (for static export)
 export async function generateStaticParams() {
@@ -142,6 +146,7 @@ export default async function LocationPage({
   const workMoodTags = getWorkMoodTags(spot);
   const meetingReadyScore = getMeetingReadyScore(spot);
   const acousticLabel = getAcousticLabel(spot);
+  const residentTip = VERIFIED_RESIDENT_TIPS[spot.slug];
 
   const compareCandidates = spots
     .filter((s) => s.slug !== spot.slug)
@@ -318,6 +323,17 @@ export default async function LocationPage({
                 <p className="text-sm text-slate-600">Acoustics: {acousticLabel}</p>
               </div>
 
+              {residentTip && (
+                <div className="bg-white rounded-xl p-6 border border-slate-200">
+                  <h3 className="font-semibold text-slate-900 mb-2">🏅 Verified Resident Tip</h3>
+                  <p className="text-sm text-slate-700">{residentTip.text}</p>
+                  <p className="text-xs text-slate-500 mt-1">— {residentTip.name} ({residentTip.handle})</p>
+                </div>
+              )}
+
+              <SentimentSnippet spotName={spot.name} />
+              <VibeGallery spotId={spot.id} />
+
               {/* Live seat status */}
               <SeatStatusReporter spotId={spot.id} />
 
@@ -326,6 +342,7 @@ export default async function LocationPage({
 
               {/* Live Speed Test */}
               <SpeedTest spot={spot} />
+              <WorkBuddyToggle spotId={spot.id} />
               
               {/* Quick Info */}
               <div className="bg-white rounded-xl p-6 border border-slate-200">

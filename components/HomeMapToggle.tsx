@@ -5,6 +5,7 @@ import Link from "next/link";
 import { MapContainer, TileLayer, CircleMarker, Popup, useMap } from "react-leaflet";
 import { WorkSpot } from "@/lib/types";
 import { NEIGHBORHOODS } from "@/lib/constants";
+import { SPOT_COORDINATES } from "@/lib/coordinates";
 import LocationCard from "@/components/LocationCard";
 import SponsoredDisclosure from "@/components/SponsoredDisclosure";
 import { isFeaturedSpot } from "@/lib/monetization";
@@ -48,6 +49,11 @@ export default function HomeMapToggle({ spots }: HomeMapToggleProps) {
   const withCoords = useMemo(
     () =>
       spots.map((spot) => {
+        const exact = SPOT_COORDINATES[spot.slug];
+        if (exact) {
+          return { spot, lat: exact.lat, lng: exact.lng };
+        }
+
         const center = neighborhoodCenter[spot.neighborhood] ?? [38.90, -77.20];
         const [latOff, lngOff] = hashOffset(spot.slug);
         return {
@@ -107,7 +113,7 @@ export default function HomeMapToggle({ spots }: HomeMapToggleProps) {
           <div className="text-sm text-slate-600 space-y-1">
             <p><strong>What this map shows:</strong> spot clusters by neighborhood.</p>
             <p>Blue pins = 100+ Mbps verified. Gray pins = under 100 Mbps.</p>
-            <p className="text-xs text-slate-500">Note: pin locations are approximate neighborhood placement for now.</p>
+            <p className="text-xs text-slate-500">Pins use per-spot coordinates and fall back to neighborhood placement when missing.</p>
           </div>
           <div className="h-[520px] rounded-xl overflow-hidden border border-slate-200">
             <MapContainer

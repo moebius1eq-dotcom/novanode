@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import PWARegister from "@/components/PWARegister";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://novanode.pages.dev"),
   title: "NoVaNode | Remote Work Spots in Northern Virginia",
   description: "Discover the best remote work locations in Northern Virginia. Verified Wi-Fi speeds, outlet density, noise levels, and seating types. Find your perfect work spot.",
   keywords: ["remote work", "coworking", "Northern Virginia", "NoVa", "wifi", "coffee shop", " Arlington", "Alexandria", "Tysons", "Reston"],
+  manifest: "/manifest.webmanifest",
   openGraph: {
     title: "NoVaNode | Remote Work Spots in Northern Virginia",
     description: "Discover verified remote work locations in NoVa with real Wi-Fi speeds, noise levels, and seating info.",
@@ -24,6 +27,7 @@ export default function RootLayout({
     <html lang="en">
       <meta name="google-site-verification" content="6mMLUhUdFGop4Fzh9_0nVyL85KJ_FvI6MIrOujCJwzs" />
       <body className="min-h-screen flex flex-col">
+        <PWARegister />
         <Navbar />
         <main className="flex-1">
           {children}

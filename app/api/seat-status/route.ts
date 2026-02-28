@@ -1,6 +1,9 @@
 import { promises as fs } from "fs";
 import path from "path";
 import { NextRequest, NextResponse } from "next/server";
+import { clientKey, isRateLimited } from "@/lib/rateLimit";
+import { scoreRisk } from "@/lib/moderation";
+import { appendModerationRecord } from "@/lib/moderationQueue";
 
 type SeatState = "plenty" | "busy" | "full";
 
@@ -66,6 +69,12 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const key = clientKey(request.headers.get("x-forwarded-for"), "seat-status");
+  const tooFrequent = isRateLimited(key, 20, 60 * 60 * 1000);
+  if (tooFrequent) {
+    return NextResponse.json({ error: "Rate limit exceeded" }, { status: 429 });
+  }
+
   try {
     const body = (await request.json()) as Partial<SeatReport>;
 
@@ -78,6 +87,16 @@ export async function POST(request: NextRequest) {
       state: body.state,
       createdAt: new Date().toISOString(),
     };
+
+    const moderation = scoreRisk({ text: `${body.spotId}:${body.state}`, tooFrequent });
+    if (moderation.risk !== "low") {
+      await appendModerationRecord({
+        kind: "seat_status_report",
+        risk: moderation.risk,
+        reasons: moderation.reasons,
+        payload: { spotId: body.spotId, state: body.state },
+      });
+    }
 
     const existing = await readReports();
     const filtered = existing.filter(withinTwoHours);

@@ -5,6 +5,8 @@ import { WorkSpot, Neighborhood } from "@/lib/types";
 import { NEIGHBORHOODS } from "@/lib/constants";
 import SearchBar from "@/components/SearchBar";
 import HomeExplore from "@/components/HomeExplore";
+import NewsletterSignup from "@/components/NewsletterSignup";
+import NeighborhoodPushSubscribe from "@/components/NeighborhoodPushSubscribe";
 
 export const metadata: Metadata = {
   title: "NoVaNode | Remote Work Spots in Northern Virginia",
@@ -127,6 +129,14 @@ export default function HomePage() {
       <section className="py-12 px-4 bg-white">
         <div className="max-w-7xl mx-auto">
           <HomeExplore spots={spots} />
+        </div>
+      </section>
+
+      {/* Retention Modules */}
+      <section className="py-12 px-4 bg-slate-50 border-t border-slate-200">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-5">
+          <NeighborhoodPushSubscribe />
+          <NewsletterSignup />
         </div>
       </section>
 

@@ -1,6 +1,7 @@
 import { promises as fs } from "fs";
 import path from "path";
 import { NextRequest, NextResponse } from "next/server";
+import { clientKey, isRateLimited } from "@/lib/rateLimit";
 
 interface SpeedSubmission {
   spotId: string;
@@ -59,6 +60,11 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const key = clientKey(request.headers.get("x-forwarded-for"), "speed-submit");
+  if (isRateLimited(key, 20, 60 * 60 * 1000)) {
+    return NextResponse.json({ error: "Rate limit exceeded" }, { status: 429 });
+  }
+
   try {
     const data = (await request.json()) as Partial<SpeedSubmission>;
 

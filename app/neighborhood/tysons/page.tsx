@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import spotsData from "@/data/spots.json";
 import { WorkSpot } from "@/lib/types";
+import NeighborhoodFAQ from "@/components/NeighborhoodFAQ";
 
 export const metadata: Metadata = {
   title: "Best Remote Work Spots in Tysons VA | Verified Wi-Fi (2026)",
@@ -125,6 +126,8 @@ export default function TysonsPage() {
           ))}
         </div>
       </section>
+
+      <NeighborhoodFAQ neighborhood="tysons" />
 
       {/* CTA */}
       <section className="py-8 px-4 bg-white border-t border-slate-200">

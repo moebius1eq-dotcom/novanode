@@ -4,6 +4,7 @@ import spotsData from "@/data/spots.json";
 import { WorkSpot } from "@/lib/types";
 import { NEIGHBORHOODS } from "@/lib/constants";
 import { generateLocalBusinessSchema, POWER_SPOTS } from "@/data/locations";
+import NeighborhoodFAQ from "@/components/NeighborhoodFAQ";
 
 export const metadata: Metadata = {
   title: "15 Best Remote Work Spots in Arlington with Verified Wi-Fi (2026)",
@@ -213,6 +214,8 @@ export default function ArlingtonPage() {
             ))}
           </div>
         </section>
+
+        <NeighborhoodFAQ neighborhood="arlington" />
 
         {/* CTA */}
         <section className="py-8 px-4 bg-white border-t border-slate-200">
