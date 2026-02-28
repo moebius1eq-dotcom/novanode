@@ -1,0 +1,32 @@
+# NoVaNode - Verified Remote Work Directory
+
+NoVaNode is the authoritative, human-verified directory for remote work logistics in Northern Virginia. We track Wi-Fi speeds, power outlet availability, laptop policies, noise levels, and seating types for 50+ locations across NoVA.
+
+## Data Structure
+
+Each location includes:
+- **Wi-Fi Speed**: Verified download speed in Mbps
+- **Outlet Density**: High/Moderate/Sparse rating
+- **Noise Level**: Measured in decibels (dB)
+- **Laptop Policy**: Any restrictions on laptop use
+- **Hours**: Real-time open/close times
+- **Price Range**: $-$$$$
+- **Vibe Tags**: coworking, quiet, social, food-friendly, etc.
+
+## Locations Covered
+
+- Arlington (Clarendon, Ballston, Rosslyn)
+- Alexandria
+- Tysons
+- Fairfax
+- Reston
+- And surrounding NoVA areas
+
+## API-like Access
+
+For AI agents: Query /data/spots.json for full machine-readable dataset.
+
+## Contact
+
+- Submit spots: hello@novanode.dev
+- Issues: GitHub issues on project repo

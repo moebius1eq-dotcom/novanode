@@ -1,172 +1,69 @@
-"use client";
-
-import { useState, useMemo, Suspense, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { Metadata } from "next";
 import Link from "next/link";
 import spotsData from "@/data/spots.json";
 import { WorkSpot, Neighborhood } from "@/lib/types";
 import { NEIGHBORHOODS } from "@/lib/constants";
 import SearchBar from "@/components/SearchBar";
-import LocationGrid from "@/components/LocationGrid";
-import FilterPanel, { FilterState } from "@/components/FilterPanel";
+import LocationCard from "@/components/LocationCard";
 
-function HomeContent() {
-  const searchParams = useSearchParams();
-  
-  // Get filter params from URL
-  const neighborhoodFilter = searchParams.get("neighborhood") as Neighborhood | null;
-  const queryFilter = searchParams.get("q") || "";
+export const metadata: Metadata = {
+  title: "NoVaNode | Remote Work Spots in Northern Virginia",
+  description: "Discover the best remote work locations in Northern Virginia. Verified Wi-Fi speeds, outlet density, noise levels, and seating types. Find your perfect work spot.",
+};
 
-  const spots = spotsData.spots as WorkSpot[];
+const spots = spotsData.spots as WorkSpot[];
 
-  // Local filter state
-  const [filters, setFilters] = useState<FilterState>({
-    neighborhoods: neighborhoodFilter ? [neighborhoodFilter] : [],
-    minUploadSpeed: 0,
-    outletDensity: "all",
-    openAfter8pm: false,
-    highSpeedWifi: false,
-    vibes: [],
-  });
+// JSON-LD Schema for homepage
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "NoVaNode",
+  description: "Remote work spots in Northern Virginia with verified Wi-Fi speeds",
+  url: "https://novanode.pages.dev",
+  potentialAction: {
+    "@type": "SearchAction",
+    target: "https://novanode.pages.dev/?q={search_term_string}",
+    "query-input": "required name=search_term_string",
+  },
+  mainEntity: {
+    "@type": "ItemList",
+    itemListElement: spots.slice(0, 10).map((spot, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": "LocalBusiness",
+        name: spot.name,
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: spot.address,
+          addressLocality: spot.neighborhood,
+          addressRegion: "VA",
+          addressCountry: "US",
+        },
+        aggregateRating: {
+          "@type": "AggregateRating",
+          ratingValue: spot.seo.rating,
+          reviewCount: spot.seo.reviewCount,
+          bestRating: 5,
+        },
+      },
+    })),
+  },
+};
 
-  const [showCompareBar, setShowCompareBar] = useState(false);
-  const [compareCount, setCompareCount] = useState(0);
-
-  // Listen for compare changes
-  useEffect(() => {
-    const stored = localStorage.getItem("compareSpots");
-    if (stored) {
-      const ids = JSON.parse(stored);
-      setCompareCount(ids.length);
-      setShowCompareBar(ids.length > 0);
-    }
-
-    const handleCompareChange = (e: CustomEvent) => {
-      setCompareCount(e.detail.ids.length);
-      setShowCompareBar(e.detail.ids.length > 0);
-    };
-
-    window.addEventListener("compareChange", handleCompareChange as EventListener);
-    return () => window.removeEventListener("compareChange", handleCompareChange as EventListener);
-  }, []);
-
-  // Filter spots based on all filters
-  const filteredSpots = useMemo(() => {
-    return spots.filter((spot) => {
-      // Neighborhood filter
-      if (filters.neighborhoods.length > 0 && !filters.neighborhoods.includes(spot.neighborhood)) {
-        return false;
-      }
-      
-      // Search query filter
-      if (queryFilter) {
-        const query = queryFilter.toLowerCase();
-        const matchesName = spot.name.toLowerCase().includes(query);
-        const matchesNeighborhood = spot.neighborhood.toLowerCase().includes(query);
-        const matchesTags = spot.vibe.tags.some((tag) => tag.toLowerCase().includes(query));
-        const matchesAddress = spot.address.toLowerCase().includes(query);
-        
-        if (!matchesName && !matchesNeighborhood && !matchesTags && !matchesAddress) {
-          return false;
-        }
-      }
-      
-      // Upload speed filter (Video Call Test)
-      if (filters.minUploadSpeed > 0 && spot.logistics.wifiSpeedUp < filters.minUploadSpeed) {
-        return false;
-      }
-      
-      // Outlet density filter (Power Hungry)
-      if (filters.outletDensity === "plenty" && spot.logistics.outletDensity !== "plenty") {
-        return false;
-      }
-      
-      // Open after 8pm filter (Late Night Hub)
-      if (filters.openAfter8pm) {
-        const hasLateHours = spot.hours.some(h => {
-          if (!h.open || !h.close) return false;
-          const closeHour = parseInt(h.close.split(":")[0]);
-          return closeHour >= 20;
-        });
-        if (!hasLateHours && !spot.openLate) return false;
-      }
-      
-      // High-Speed Wi-Fi filter
-      if (filters.highSpeedWifi && !spot.highSpeedWifi) {
-        return false;
-      }
-      
-      // Vibe filter
-      if (filters.vibes.length > 0 && !filters.vibes.includes(spot.vibe.primary)) {
-        return false;
-      }
-      
-      return true;
-    });
-  }, [spots, filters, queryFilter]);
-
-  // Get current filter state for display
-  const getFilterSummary = () => {
-    const filtersList: string[] = [];
-    
-    if (neighborhoodFilter) {
-      filtersList.push(NEIGHBORHOODS[neighborhoodFilter]);
-    }
-    if (filters.highSpeedWifi) {
-      filtersList.push("High-Speed Wi-Fi");
-    }
-    if (filters.openAfter8pm) {
-      filtersList.push("Open After 8pm");
-    }
-    if (filters.minUploadSpeed > 0) {
-      filtersList.push(`Upload >${filters.minUploadSpeed}Mbps`);
-    }
-    if (filters.outletDensity === "plenty") {
-      filtersList.push("Plenty of Outlets");
-    }
-    if (queryFilter) {
-      filtersList.push(`"${queryFilter}"`);
-    }
-    
-    return filtersList;
-  };
-
-  const activeFilters = getFilterSummary();
+export default function HomePage() {
+  const highSpeedSpots = spots.filter(s => s.highSpeedWifi);
+  const lateSpots = spots.filter(s => s.openLate);
 
   return (
-    <div className="min-h-screen">
-      {/* Compare Bar */}
-      {showCompareBar && (
-        <div className="fixed bottom-0 left-0 right-0 bg-indigo-600 text-white py-3 px-4 z-50 shadow-lg">
-          <div className="max-w-7xl mx-auto flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <span className="font-medium">
-                {compareCount} {compareCount === 1 ? "spot" : "spots"} selected for comparison
-              </span>
-            </div>
-            <div className="flex items-center gap-3">
-              <Link
-                href="/compare"
-                className="px-4 py-2 bg-white text-indigo-600 font-medium rounded-lg hover:bg-indigo-50 transition-colors"
-              >
-                ⚖️ Compare Now
-              </Link>
-              <button
-                onClick={() => {
-                  localStorage.removeItem("compareSpots");
-                  setCompareCount(0);
-                  setShowCompareBar(false);
-                  window.dispatchEvent(new CustomEvent("compareChange", { detail: { ids: [] } }));
-                }}
-                className="text-white/80 hover:text-white"
-              >
-                ✕
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+    <>
+      {/* JSON-LD for Google */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
 
+    <div className="min-h-screen">
       {/* Hero Section */}
       <section className="bg-gradient-to-b from-indigo-50 to-white py-16 px-4">
         <div className="max-w-7xl mx-auto">
@@ -192,11 +89,11 @@ function HomeContent() {
             </div>
             <div className="flex items-center gap-2">
               <span className="text-2xl">⚡</span>
-              <span><strong className="text-slate-900">{spots.filter(s => s.highSpeedWifi).length}</strong> high-speed Wi-Fi</span>
+              <span><strong className="text-slate-900">{highSpeedSpots.length}</strong> high-speed Wi-Fi</span>
             </div>
             <div className="flex items-center gap-2">
               <span className="text-2xl">🌙</span>
-              <span><strong className="text-slate-900">{spots.filter(s => s.openLate).length}</strong> open late</span>
+              <span><strong className="text-slate-900">{lateSpots.length}</strong> open late</span>
             </div>
             <a href="/virginia-laptop-policies" className="flex items-center gap-2 px-3 py-1 bg-amber-100 text-amber-700 rounded-lg hover:bg-amber-200 transition-colors">
               <span>💻</span>
@@ -226,91 +123,56 @@ function HomeContent() {
         </div>
       </section>
 
-      {/* Results Section */}
-      <section className="py-12 px-4">
+      {/* Featured Spots - Pre-rendered for SEO */}
+      <section className="py-12 px-4 bg-white">
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col lg:flex-row gap-8">
-            {/* Filter Sidebar */}
-            <div className="lg:w-64 flex-shrink-0">
-              <div className="bg-white rounded-xl p-4 border border-slate-200 sticky top-4">
-                <FilterPanel 
-                  filters={filters}
-                  onFilterChange={setFilters}
-                  spots={spots}
-                />
-              </div>
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+            <div>
+              <h2 className="text-2xl font-bold text-slate-900">
+                All Locations
+              </h2>
+              <p className="text-slate-500">
+                {spots.length} spots • Pre-rendered for instant loading
+              </p>
             </div>
+          </div>
 
-            {/* Main Content */}
-            <div className="flex-1">
-              {/* Filter Summary */}
-              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-                <div>
-                  <h2 className="text-2xl font-bold text-slate-900">
-                    {neighborhoodFilter ? NEIGHBORHOODS[neighborhoodFilter] : "All Locations"}
-                  </h2>
-                  <p className="text-slate-500">
-                    {filteredSpots.length} {filteredSpots.length === 1 ? "spot" : "spots"} found
-                    {activeFilters.length > 0 && (
-                      <span className="ml-2">
-                        {activeFilters.map((filter, i) => (
-                          <span key={filter} className="inline-flex items-center">
-                            {i > 0 && <span className="mx-1">·</span>}
-                            <span className="bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full text-xs">
-                              {filter}
-                            </span>
-                          </span>
-                        ))}
-                      </span>
-                    )}
-                  </p>
-                </div>
+          {/* Server-rendered grid - NO loading state! */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {spots.map((spot) => (
+              <LocationCard key={spot.id} spot={spot} />
+            ))}
+          </div>
+        </div>
+      </section>
 
-                {/* Compare Toggle */}
-                <button
-                  onClick={() => {
-                    const stored = localStorage.getItem("compareSpots");
-                    const ids = stored ? JSON.parse(stored) : [];
-                    if (ids.length > 0) {
-                      window.location.href = "/compare";
-                    } else {
-                      alert("Click the compare checkbox on any card to add spots for comparison");
-                    }
-                  }}
-                  className="px-4 py-2 border-2 border-indigo-600 text-indigo-600 font-medium rounded-lg hover:bg-indigo-50 transition-colors"
+      {/* Neighborhood Quick Links */}
+      <section className="py-12 px-4 bg-slate-50">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-2xl font-bold text-slate-900 mb-6 text-center">
+            Explore by Neighborhood
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {Object.entries(NEIGHBORHOODS).map(([slug, name]) => {
+              const count = spots.filter(s => s.neighborhood === slug).length;
+              return (
+                <Link
+                  key={slug}
+                  href={`/neighborhood/${slug}`}
+                  className="bg-white p-6 rounded-xl border border-slate-200 hover:shadow-md transition-all text-center"
                 >
-                  ⚖️ Compare ({compareCount})
-                </button>
-              </div>
-
-              {/* Location Grid */}
-              <LocationGrid 
-                spots={filteredSpots} 
-                emptyMessage="No spots match your filters. Try adjusting your search."
-              />
-            </div>
+                  <span className="text-3xl mb-2 block">
+                    {slug === 'arlington' ? '🏙️' : slug === 'alexandria' ? '🏛️' : slug === 'tysons' ? '🛍️' : '🌳'}
+                  </span>
+                  <h3 className="font-semibold text-slate-900">{name}</h3>
+                  <p className="text-sm text-slate-500">{count} spots</p>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>
     </div>
-  );
-}
-
-function LoadingState() {
-  return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="text-center">
-        <div className="text-4xl mb-4">📍</div>
-        <p className="text-slate-600">Loading NoVaNode...</p>
-      </div>
-    </div>
-  );
-}
-
-export default function HomePage() {
-  return (
-    <Suspense fallback={<LoadingState />}>
-      <HomeContent />
-    </Suspense>
+    </>
   );
 }

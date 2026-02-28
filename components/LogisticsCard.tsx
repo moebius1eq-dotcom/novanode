@@ -42,13 +42,62 @@ export default function LogisticsCard({ logistics, compact = false }: LogisticsC
     );
   }
 
-  // Full logistics card
+  // Full logistics card with "Logistics Pills" - Zero-Click info for 2026
   return (
     <div className="bg-slate-50 rounded-xl p-5 border border-slate-200">
-      <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-4">
-        🏢 Logistics
-      </h3>
+      {/* Zero-Click Pills Row - High Contrast for Scannability */}
+      <div className="flex flex-wrap gap-2 mb-4">
+        {/* Wi-Fi Speed Pill */}
+        <div className={`px-3 py-1.5 rounded-full text-sm font-bold flex items-center gap-1.5 ${
+          logistics.wifiSpeedDown >= 100 
+            ? "bg-green-600 text-white" 
+            : "bg-slate-600 text-white"
+        }`}>
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.14 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0" />
+          </svg>
+          {formatWiFiSpeed(logistics.wifiSpeedDown)} Mbps
+        </div>
+
+        {/* Outlets Pill */}
+        <div className={`px-3 py-1.5 rounded-full text-sm font-bold flex items-center gap-1.5 ${
+          logistics.outletDensity === "plenty"
+            ? "bg-blue-600 text-white"
+            : logistics.outletDensity === "moderate"
+            ? "bg-amber-500 text-white"
+            : "bg-slate-500 text-white"
+        }`}>
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+          {logistics.outletDensity === "plenty" ? "🔋 Power" : 
+           logistics.outletDensity === "moderate" ? "🔌 Some Outlets" : "⚡ Limited"}
+        </div>
+
+        {/* Noise Level Pill */}
+        <div className={`px-3 py-1.5 rounded-full text-sm font-bold flex items-center gap-1.5 ${
+          logistics.noiseLevel <= 45
+            ? "bg-indigo-600 text-white"
+            : logistics.noiseLevel <= 70
+            ? "bg-yellow-500 text-white"
+            : "bg-red-500 text-white"
+        }`}>
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75z" />
+          </svg>
+          {noise.label}
+        </div>
+
+        {/* Verified Pill */}
+        <div className="px-3 py-1.5 rounded-full text-sm font-bold bg-slate-800 text-white flex items-center gap-1.5">
+          <svg className="w-4 h-4 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+          </svg>
+          Verified
+        </div>
+      </div>
       
+      {/* Detailed Grid */}
       <div className="logistics-grid">
         {/* Wi-Fi Speed */}
         <div className="bg-white rounded-lg p-4 border border-slate-200">
