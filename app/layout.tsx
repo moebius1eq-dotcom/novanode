@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PWARegister from "@/components/PWARegister";
+import StickyFilterBar from "@/components/StickyFilterBar";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://novanode.pages.dev"),
@@ -33,6 +34,7 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        <StickyFilterBar />
       </body>
     </html>
   );

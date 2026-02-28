@@ -20,7 +20,7 @@ export default function CompareCheckbox({ spot, onToggle, isSelected }: CompareC
       className={`absolute top-3 left-3 z-10 p-2 rounded-lg border-2 transition-all ${
         isSelected 
           ? "bg-indigo-600 border-indigo-600 text-white" 
-          : "bg-white/90 border-slate-300 text-slate-400 hover:border-indigo-500 hover:text-indigo-500"
+          : "bg-white border-slate-300 text-slate-400 hover:border-indigo-500 hover:text-indigo-500"
       }`}
       title={isSelected ? "Remove from comparison" : "Add to comparison"}
     >

@@ -67,60 +67,17 @@ export default function HomePage() {
 
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-b from-indigo-50 to-white py-16 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-10">
-            <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
-              Find Your Perfect<br />
-              <span className="text-indigo-600">Remote Work Spot</span> in NoVa
-            </h1>
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-              Verified Wi-Fi speeds, outlet density, noise levels, and seating types. 
-              Real data for real remote workers.
-            </p>
+      <section className="bg-[#F9FAFB] py-14 px-4 border-b border-[#E5E7EB]">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-7">
+            <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-2">Where are you working today?</h1>
+            <p className="text-sm text-slate-500">Pick fast WiFi. Pick open seats. Go.</p>
           </div>
-
-          {/* Search Bar */}
           <SearchBar />
-
-          {/* Quick Stats */}
-          <div className="flex flex-wrap justify-center gap-6 mt-8 text-sm text-slate-600">
-            <div className="flex items-center gap-2">
-              <span className="text-2xl">📍</span>
-              <span><strong className="text-slate-900">{spots.length}</strong> spots verified</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="text-2xl">⚡</span>
-              <span><strong className="text-slate-900">{highSpeedSpots.length}</strong> high-speed Wi-Fi</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="text-2xl">🌙</span>
-              <span><strong className="text-slate-900">{lateSpots.length}</strong> open late</span>
-            </div>
-            <a href="/virginia-laptop-policies" className="flex items-center gap-2 px-3 py-1 bg-amber-100 text-amber-700 rounded-lg hover:bg-amber-200 transition-colors">
-              <span>💻</span>
-              <span><strong>Laptop Policies</strong></span>
-            </a>
-            <a href="/free-alternatives" className="flex items-center gap-2 px-3 py-1 bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition-colors">
-              <span>💰</span>
-              <span><strong>Free Spots</strong></span>
-            </a>
-          </div>
-
-          {/* Quick Filters */}
-          <div className="flex flex-wrap justify-center gap-3 mt-6">
-            <a href="/?highSpeed=true" className="px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors">
-              ⚡ High-Speed WiFi
-            </a>
-            <a href="/?openLate=true" className="px-4 py-2 bg-slate-800 text-white text-sm font-medium rounded-lg hover:bg-slate-700 transition-colors">
-              🌙 Open Now
-            </a>
-            <a href="/free-parking-remote-work" className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors">
-              🅿️ Free Parking
-            </a>
-            <a href="/laptop-friendly-weekends" className="px-4 py-2 bg-amber-600 text-white text-sm font-medium rounded-lg hover:bg-amber-700 transition-colors">
-              💻 Weekend Friendly
-            </a>
+          <div className="flex flex-wrap justify-center gap-3 mt-5 text-xs">
+            <span className="px-3 py-1 rounded-full bg-white border border-slate-200 text-slate-700">{spots.length} Verified Spots</span>
+            <span className="px-3 py-1 rounded-full bg-white border border-slate-200 text-slate-700">{highSpeedSpots.length} Fast WiFi</span>
+            <span className="px-3 py-1 rounded-full bg-white border border-slate-200 text-slate-700">{lateSpots.length} Open Late</span>
           </div>
         </div>
       </section>
