@@ -10,7 +10,12 @@ export default function AmplitudeInit() {
   useEffect(() => {
     if (initialized) return;
 
-    amplitude.add(sessionReplayPlugin());
+    amplitude.add(
+      sessionReplayPlugin({
+        sampleRate: 1,
+      }),
+    );
+
     amplitude.init("173866292f0463c4fbe6444123adca26", {
       autocapture: {
         attribution: true,
@@ -29,9 +34,6 @@ export default function AmplitudeInit() {
         },
       },
     });
-
-    // Optional custom event example:
-    // amplitude.track("Sign Up");
 
     initialized = true;
   }, []);
