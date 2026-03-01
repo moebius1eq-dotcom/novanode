@@ -1,9 +1,9 @@
-# https://novanode.moebius1eq.workers.dev/robots.txt
+# https://novanode-six.vercel.app/robots.txt
 User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://novanode.moebius1eq.workers.dev/sitemap.xml
+Sitemap: https://novanode-six.vercel.app/sitemap.xml
 
 # Crawl-delay (optional, be nice to servers)
 Crawl-delay: 1
