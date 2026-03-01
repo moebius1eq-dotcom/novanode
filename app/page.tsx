@@ -4,13 +4,14 @@ import { WorkSpot } from "@/lib/types";
 import SearchBar from "@/components/SearchBar";
 import HomeExplore from "@/components/HomeExplore";
 import HomeSecondarySections from "@/components/HomeSecondarySections";
+import { filterVerifiedSpots } from "@/lib/verified";
 
 export const metadata: Metadata = {
   title: "NoVaNode | Remote Work Spots in Northern Virginia",
   description: "Discover the best remote work locations in Northern Virginia. Verified Wi-Fi speeds, outlet density, noise levels, and seating types. Find your perfect work spot.",
 };
 
-const spots = spotsData.spots as WorkSpot[];
+const spots = filterVerifiedSpots(spotsData.spots as WorkSpot[]);
 
 // JSON-LD Schema for homepage
 const jsonLd = {

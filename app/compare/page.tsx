@@ -5,9 +5,10 @@ import Link from "next/link";
 import spotsData from "@/data/spots.json";
 import { WorkSpot } from "@/lib/types";
 import { NEIGHBORHOODS } from "@/lib/constants";
+import { filterVerifiedSpots } from "@/lib/verified";
 
 export default function ComparePage() {
-  const spots = spotsData.spots as WorkSpot[];
+  const spots = filterVerifiedSpots(spotsData.spots as WorkSpot[]);
   
   const [selectedSpots, setSelectedSpots] = useState<WorkSpot[]>([]);
   const [availableSpots] = useState<WorkSpot[]>(spots);

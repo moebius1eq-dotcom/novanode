@@ -24,6 +24,7 @@ export default function SpeedTest({ spot }: SpeedTestProps) {
   const [result, setResult] = useState<SpeedResult | null>(null);
   const [message, setMessage] = useState<string>("");
   const [submitting, setSubmitting] = useState(false);
+  const communityEnabled = process.env.NEXT_PUBLIC_ENABLE_COMMUNITY === "true";
 
   async function runTest() {
     setIsRunning(true);
@@ -66,6 +67,10 @@ export default function SpeedTest({ spot }: SpeedTestProps) {
 
   async function submitResult() {
     if (!result) return;
+    if (!communityEnabled) {
+      setMessage("Community submissions are temporarily unavailable.");
+      return;
+    }
     setSubmitting(true);
     setMessage("");
 
@@ -137,12 +142,13 @@ export default function SpeedTest({ spot }: SpeedTestProps) {
 
       <button
         onClick={submitResult}
-        disabled={!result || submitting}
+        disabled={!result || submitting || !communityEnabled}
         className="mt-4 w-full px-4 py-2.5 border border-indigo-300 text-indigo-700 rounded-lg font-medium hover:bg-indigo-50 disabled:opacity-50"
       >
         {submitting ? "Submitting…" : "Submit this speed to NoVaNode"}
       </button>
 
+      {!communityEnabled && <p className="mt-3 text-sm text-slate-500">Submit is temporarily unavailable while backend persistence is being upgraded.</p>}
       {message && <p className="mt-3 text-sm text-slate-600">{message}</p>}
     </div>
   );

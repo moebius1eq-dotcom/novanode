@@ -24,8 +24,14 @@ export default function SeatStatusReporter({ spotId }: SeatStatusReporterProps) 
   const [data, setData] = useState<SeatStatusResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState<SeatState | null>(null);
+  const communityEnabled = process.env.NEXT_PUBLIC_ENABLE_COMMUNITY === "true";
 
   async function loadStatus() {
+    if (!communityEnabled) {
+      setLoading(false);
+      return;
+    }
+
     try {
       const response = await fetch(`/api/seat-status?spotId=${encodeURIComponent(spotId)}`, { cache: "no-store" });
       if (!response.ok) throw new Error("load failed");
@@ -45,6 +51,7 @@ export default function SeatStatusReporter({ spotId }: SeatStatusReporterProps) 
   }, [spotId]);
 
   async function submit(state: SeatState) {
+    if (!communityEnabled) return;
     setSubmitting(state);
     try {
       await fetch("/api/seat-status", {
@@ -76,7 +83,9 @@ export default function SeatStatusReporter({ spotId }: SeatStatusReporterProps) 
         ))}
       </div>
 
-      {loading ? (
+      {!communityEnabled ? (
+        <p className="text-sm text-slate-500">Live seat reports are temporarily unavailable.</p>
+      ) : loading ? (
         <p className="text-sm text-slate-500">Loading live status…</p>
       ) : data?.currentState ? (
         <p className="text-sm text-slate-700">

@@ -19,10 +19,11 @@ import WorkBuddyToggle from "@/components/WorkBuddyToggle";
 import { getAcousticLabel, getMeetingReadyScore, getWorkMoodTags } from "@/lib/environment";
 import { shouldShowDayPassPartner, shouldShowOutletAffiliate } from "@/lib/monetization";
 import { VERIFIED_RESIDENT_TIPS } from "@/lib/residents";
+import { filterVerifiedSpots } from "@/lib/verified";
 
 // Static params for all locations (for static export)
 export async function generateStaticParams() {
-  const spots = spotsData.spots as WorkSpot[];
+  const spots = filterVerifiedSpots(spotsData.spots as WorkSpot[]);
   return spots.map((spot) => ({
     neighborhood: spot.neighborhood,
     slug: spot.slug,
@@ -36,7 +37,7 @@ export async function generateMetadata({
   params: Promise<{ neighborhood: string; slug: string }>;
 }): Promise<Metadata> {
   const { neighborhood, slug } = await params;
-  const spots = spotsData.spots as WorkSpot[];
+  const spots = filterVerifiedSpots(spotsData.spots as WorkSpot[]);
   const spot = spots.find((s) => s.neighborhood === neighborhood && s.slug === slug);
   
   if (!spot) {
@@ -133,7 +134,7 @@ export default async function LocationPage({
   params: Promise<{ neighborhood: string; slug: string }>;
 }) {
   const { neighborhood, slug } = await params;
-  const spots = spotsData.spots as WorkSpot[];
+  const spots = filterVerifiedSpots(spotsData.spots as WorkSpot[]);
   const spot = spots.find((s) => s.neighborhood === neighborhood && s.slug === slug);
   
   if (!spot) {
@@ -147,6 +148,8 @@ export default async function LocationPage({
   const meetingReadyScore = getMeetingReadyScore(spot);
   const acousticLabel = getAcousticLabel(spot);
   const residentTip = VERIFIED_RESIDENT_TIPS[spot.slug];
+
+  const directionsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(spot.address)}`;
 
   const compareCandidates = spots
     .filter((s) => s.slug !== spot.slug)
@@ -414,7 +417,7 @@ export default async function LocationPage({
               {/* Actions */}
               <div className="bg-white rounded-xl p-6 border border-slate-200 space-y-3">
                 <a 
-                  href={spot.googleMapsUrl}
+                  href={directionsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block w-full text-center px-4 py-3 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 transition-colors"

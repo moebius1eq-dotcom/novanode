@@ -5,8 +5,10 @@ import { useEffect, useState } from "react";
 export default function WorkBuddyToggle({ spotId }: { spotId: string }) {
   const [count, setCount] = useState(0);
   const [status, setStatus] = useState("");
+  const communityEnabled = process.env.NEXT_PUBLIC_ENABLE_COMMUNITY === "true";
 
   async function refresh() {
+    if (!communityEnabled) return;
     const res = await fetch(`/api/work-buddy?spotId=${encodeURIComponent(spotId)}`, { cache: "no-store" });
     if (res.ok) {
       const json = (await res.json()) as { count: number };
@@ -19,6 +21,10 @@ export default function WorkBuddyToggle({ spotId }: { spotId: string }) {
   }, [spotId]);
 
   async function mark(hours: number) {
+    if (!communityEnabled) {
+      setStatus("Work Buddy is temporarily unavailable.");
+      return;
+    }
     setStatus("Updating…");
     const until = new Date(Date.now() + hours * 60 * 60 * 1000).toISOString();
     const res = await fetch("/api/work-buddy", {
@@ -35,10 +41,11 @@ export default function WorkBuddyToggle({ spotId }: { spotId: string }) {
       <h3 className="font-semibold text-slate-900 mb-2">🤝 Work Buddy</h3>
       <p className="text-sm text-slate-600 mb-3">I’m working here until:</p>
       <div className="flex gap-2 mb-3">
-        <button onClick={() => mark(2)} className="px-3 py-1.5 rounded-lg border border-slate-300 text-sm">+2h</button>
-        <button onClick={() => mark(4)} className="px-3 py-1.5 rounded-lg border border-slate-300 text-sm">+4h</button>
+        <button disabled={!communityEnabled} onClick={() => mark(2)} className="px-3 py-1.5 rounded-lg border border-slate-300 text-sm disabled:opacity-50">+2h</button>
+        <button disabled={!communityEnabled} onClick={() => mark(4)} className="px-3 py-1.5 rounded-lg border border-slate-300 text-sm disabled:opacity-50">+4h</button>
       </div>
       <p className="text-sm text-slate-700">Active buddies now: <strong>{count}</strong></p>
+      {!communityEnabled && <p className="text-xs text-slate-500 mt-2">Temporarily unavailable while backend persistence is being upgraded.</p>}
       {status && <p className="text-xs text-slate-500 mt-2">{status}</p>}
     </div>
   );

@@ -5,8 +5,9 @@ import CompareSpots from "@/components/CompareSpots";
 import spotsData from "@/data/spots.json";
 import { WorkSpot } from "@/lib/types";
 import { NEIGHBORHOODS } from "@/lib/constants";
+import { filterVerifiedSpots } from "@/lib/verified";
 
-const spots = spotsData.spots as WorkSpot[];
+const spots = filterVerifiedSpots(spotsData.spots as WorkSpot[]);
 
 function normalizePair(pair: string) {
   const parts = pair.split("-vs-");

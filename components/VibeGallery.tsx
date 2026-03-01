@@ -10,8 +10,10 @@ interface VibeItem {
 export default function VibeGallery({ spotId }: { spotId: string }) {
   const [item, setItem] = useState<VibeItem | null>(null);
   const [status, setStatus] = useState("");
+  const communityEnabled = process.env.NEXT_PUBLIC_ENABLE_COMMUNITY === "true";
 
   async function load() {
+    if (!communityEnabled) return;
     const res = await fetch(`/api/vibe-photo?spotId=${encodeURIComponent(spotId)}`, { cache: "no-store" });
     if (res.ok) {
       const json = (await res.json()) as { items: VibeItem[] };
@@ -24,6 +26,10 @@ export default function VibeGallery({ spotId }: { spotId: string }) {
   }, [spotId]);
 
   async function upload(file: File) {
+    if (!communityEnabled) {
+      setStatus("Community uploads are temporarily unavailable.");
+      return;
+    }
     setStatus("Uploading…");
     const form = new FormData();
     form.append("spotId", spotId);
@@ -42,7 +48,7 @@ export default function VibeGallery({ spotId }: { spotId: string }) {
       ) : (
         <div className="w-full h-40 rounded-lg border border-dashed border-slate-300 mb-3 flex items-center justify-center text-sm text-slate-500">No vibe photo yet</div>
       )}
-      <input type="file" accept="image/*" onChange={(e) => e.target.files?.[0] && upload(e.target.files[0])} className="text-sm" />
+      <input disabled={!communityEnabled} type="file" accept="image/*" onChange={(e) => e.target.files?.[0] && upload(e.target.files[0])} className="text-sm disabled:opacity-50" />
       {status && <p className="mt-2 text-xs text-slate-500">{status}</p>}
     </div>
   );

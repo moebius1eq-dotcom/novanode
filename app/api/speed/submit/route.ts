@@ -2,6 +2,7 @@ import { promises as fs } from "fs";
 import path from "path";
 import { NextRequest, NextResponse } from "next/server";
 import { clientKey, isRateLimited } from "@/lib/rateLimit";
+import { getSupabaseServer, isSupabaseConfigured } from "@/lib/supabaseServer";
 
 interface SpeedSubmission {
   spotId: string;
@@ -30,9 +31,7 @@ function median(values: number[]) {
   if (values.length === 0) return 0;
   const sorted = [...values].sort((a, b) => a - b);
   const mid = Math.floor(sorted.length / 2);
-  const value = sorted.length % 2 === 0
-    ? (sorted[mid - 1] + sorted[mid]) / 2
-    : sorted[mid];
+  const value = sorted.length % 2 === 0 ? (sorted[mid - 1] + sorted[mid]) / 2 : sorted[mid];
   return Number(value.toFixed(1));
 }
 
@@ -44,19 +43,35 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "spotId is required" }, { status: 400 });
   }
 
+  if (isSupabaseConfigured()) {
+    const supabase = getSupabaseServer();
+    const { data, error } = await supabase!
+      .from("speed_submissions")
+      .select("latency_ms,download_mbps,upload_mbps,created_at")
+      .eq("spot_id", spotId)
+      .order("created_at", { ascending: false })
+      .limit(100);
+
+    if (!error && data) {
+      return NextResponse.json({
+        count: data.length,
+        medianDownloadMbps: median(data.map((s) => Number(s.download_mbps))),
+        medianUploadMbps: median(data.map((s) => Number(s.upload_mbps))),
+        medianLatencyMs: median(data.map((s) => Number(s.latency_ms))),
+        latestAt: data[0]?.created_at ?? null,
+      });
+    }
+  }
+
   const all = await readSubmissions();
   const recent = all.filter((s) => s.spotId === spotId).slice(0, 100);
-
-  return NextResponse.json(
-    {
-      count: recent.length,
-      medianDownloadMbps: median(recent.map((s) => s.downloadMbps)),
-      medianUploadMbps: median(recent.map((s) => s.uploadMbps)),
-      medianLatencyMs: median(recent.map((s) => s.latencyMs)),
-      latestAt: recent[0]?.createdAt ?? null,
-    },
-    { status: 200 },
-  );
+  return NextResponse.json({
+    count: recent.length,
+    medianDownloadMbps: median(recent.map((s) => s.downloadMbps)),
+    medianUploadMbps: median(recent.map((s) => s.uploadMbps)),
+    medianLatencyMs: median(recent.map((s) => s.latencyMs)),
+    latestAt: recent[0]?.createdAt ?? null,
+  });
 }
 
 export async function POST(request: NextRequest) {
@@ -67,7 +82,6 @@ export async function POST(request: NextRequest) {
 
   try {
     const data = (await request.json()) as Partial<SpeedSubmission>;
-
     if (!data.spotId || !data.spotSlug || !data.spotName || !data.neighborhood) {
       return NextResponse.json({ error: "Missing spot fields" }, { status: 400 });
     }
@@ -75,9 +89,22 @@ export async function POST(request: NextRequest) {
     const latencyMs = Number(data.latencyMs ?? 0);
     const downloadMbps = Number(data.downloadMbps ?? 0);
     const uploadMbps = Number(data.uploadMbps ?? 0);
-
     if (latencyMs <= 0 || downloadMbps <= 0 || uploadMbps <= 0) {
       return NextResponse.json({ error: "Invalid speed values" }, { status: 400 });
+    }
+
+    if (isSupabaseConfigured()) {
+      const supabase = getSupabaseServer();
+      const { error } = await supabase!.from("speed_submissions").insert({
+        spot_id: data.spotId,
+        spot_slug: data.spotSlug,
+        spot_name: data.spotName,
+        neighborhood: data.neighborhood,
+        latency_ms: latencyMs,
+        download_mbps: downloadMbps,
+        upload_mbps: uploadMbps,
+      });
+      if (!error) return NextResponse.json({ ok: true });
     }
 
     const entry: SpeedSubmission = {
@@ -94,8 +121,7 @@ export async function POST(request: NextRequest) {
     const existing = await readSubmissions();
     existing.unshift(entry);
     await fs.writeFile(filePath, JSON.stringify(existing.slice(0, 1000), null, 2), "utf8");
-
-    return NextResponse.json({ ok: true }, { status: 200 });
+    return NextResponse.json({ ok: true });
   } catch {
     return NextResponse.json({ error: "Failed to save submission" }, { status: 500 });
   }
