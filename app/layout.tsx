@@ -28,7 +28,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <meta name="google-site-verification" content="6mMLUhUdFGop4Fzh9_0nVyL85KJ_FvI6MIrOujCJwzs" />
+      <meta name="google-site-verification" content="wewHqQ-K0vV4dp9rPN28BRmdnj1wbtVD7fI4mAS3ENs" />
       <body className="min-h-screen flex flex-col">
         <PWARegister />
         <AmplitudeInit />
