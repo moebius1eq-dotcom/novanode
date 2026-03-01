@@ -6,26 +6,42 @@ function isAuthorized(request: NextRequest) {
 
   const headerToken = request.headers.get("x-admin-token");
   const queryToken = request.nextUrl.searchParams.get("token");
+  const cookieToken = request.cookies.get("novanode_admin_token")?.value;
 
-  return headerToken === token || queryToken === token;
+  return headerToken === token || queryToken === token || cookieToken === token;
 }
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  const isAdminPage = pathname.startsWith("/admin");
+  const isAdminApi = pathname.startsWith("/api/admin");
 
-  if (pathname.startsWith("/admin") || pathname.startsWith("/api/admin")) {
-    if (!isAuthorized(request)) {
-      return NextResponse.json(
-        {
-          error: "Unauthorized",
-          hint: "Set NOVANODE_ADMIN_TOKEN and pass it via ?token=... or x-admin-token header",
-        },
-        { status: 401 },
-      );
-    }
+  if (!isAdminPage && !isAdminApi) {
+    return NextResponse.next();
   }
 
-  return NextResponse.next();
+  if (pathname === "/admin/login" || pathname === "/admin/login/") {
+    return NextResponse.next();
+  }
+
+  if (isAuthorized(request)) {
+    return NextResponse.next();
+  }
+
+  if (isAdminApi) {
+    return NextResponse.json(
+      {
+        error: "Unauthorized",
+        hint: "Login at /admin/login or provide x-admin-token",
+      },
+      { status: 401 },
+    );
+  }
+
+  const loginUrl = request.nextUrl.clone();
+  loginUrl.pathname = "/admin/login";
+  loginUrl.searchParams.set("next", pathname);
+  return NextResponse.redirect(loginUrl);
 }
 
 export const config = {
