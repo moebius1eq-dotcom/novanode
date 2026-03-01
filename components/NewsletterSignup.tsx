@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import * as amplitude from "@amplitude/analytics-browser";
 
 export default function NewsletterSignup() {
   const [email, setEmail] = useState("");
@@ -15,8 +16,13 @@ export default function NewsletterSignup() {
       body: JSON.stringify({ email }),
     });
 
-    setStatus(res.ok ? "Subscribed to NoVA Nomad weekly digest." : "Could not subscribe right now.");
-    if (res.ok) setEmail("");
+    if (res.ok) {
+      amplitude.track("Newsletter Subscribed", { placement: "homepage" });
+      setStatus("Subscribed to NoVA Nomad weekly digest.");
+      setEmail("");
+    } else {
+      setStatus("Could not subscribe right now.");
+    }
   }
 
   return (

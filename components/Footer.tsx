@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Footer() {
   return (
     <footer className="bg-white border-t border-slate-200 mt-10">
@@ -8,6 +10,14 @@ export default function Footer() {
         <a href="/#" className="block text-center px-4 py-3 rounded-lg border border-slate-300 text-slate-800 font-semibold hover:bg-slate-50">
           🌐 Live Seat Map
         </a>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 pb-6 flex items-center justify-center gap-5 text-sm text-slate-500">
+        <Link href="/privacy" className="hover:text-slate-700">Privacy Policy</Link>
+        <span>•</span>
+        <Link href="/terms" className="hover:text-slate-700">Terms</Link>
+        <span>•</span>
+        <Link href="/contact" className="hover:text-slate-700">Contact</Link>
       </div>
     </footer>
   );

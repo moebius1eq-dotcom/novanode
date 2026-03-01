@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import * as amplitude from "@amplitude/analytics-browser";
 
 interface VibeItem {
   url: string;
@@ -35,8 +36,16 @@ export default function VibeGallery({ spotId }: { spotId: string }) {
     form.append("spotId", spotId);
     form.append("file", file);
     const res = await fetch("/api/vibe-photo", { method: "POST", body: form });
-    setStatus(res.ok ? "Uploaded current vibe photo." : "Upload failed.");
-    if (res.ok) load();
+
+    if (res.ok) {
+      amplitude.track("Vibe Photo Uploaded", { spotId });
+      setStatus("Uploaded current vibe photo.");
+      load();
+      return;
+    }
+
+    const body = await res.json().catch(() => ({ error: "Upload failed." }));
+    setStatus(body.error ?? "Upload failed.");
   }
 
   return (

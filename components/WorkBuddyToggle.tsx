@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import * as amplitude from "@amplitude/analytics-browser";
 
 export default function WorkBuddyToggle({ spotId }: { spotId: string }) {
   const [count, setCount] = useState(0);
@@ -32,7 +33,12 @@ export default function WorkBuddyToggle({ spotId }: { spotId: string }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ spotId, until }),
     });
-    setStatus(res.ok ? `You are marked as working here for ~${hours}h.` : "Update failed.");
+    if (res.ok) {
+      amplitude.track("Work Buddy Set", { spotId, hours });
+      setStatus(`You are marked as working here for ~${hours}h.`);
+    } else {
+      setStatus("Update failed.");
+    }
     refresh();
   }
 

@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PWARegister from "@/components/PWARegister";
+import AmplitudeInit from "@/components/AmplitudeInit";
 import StickyFilterBar from "@/components/StickyFilterBar";
 
 export const metadata: Metadata = {
@@ -30,6 +31,7 @@ export default function RootLayout({
       <meta name="google-site-verification" content="6mMLUhUdFGop4Fzh9_0nVyL85KJ_FvI6MIrOujCJwzs" />
       <body className="min-h-screen flex flex-col">
         <PWARegister />
+        <AmplitudeInit />
         <Navbar />
         <main className="flex-1">
           {children}

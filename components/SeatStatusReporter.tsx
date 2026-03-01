@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import * as amplitude from "@amplitude/analytics-browser";
 
 type SeatState = "plenty" | "busy" | "full";
 
@@ -24,6 +25,7 @@ export default function SeatStatusReporter({ spotId }: SeatStatusReporterProps) 
   const [data, setData] = useState<SeatStatusResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState<SeatState | null>(null);
+  const [error, setError] = useState("");
   const communityEnabled = process.env.NEXT_PUBLIC_ENABLE_COMMUNITY === "true";
 
   async function loadStatus() {
@@ -53,11 +55,23 @@ export default function SeatStatusReporter({ spotId }: SeatStatusReporterProps) 
   async function submit(state: SeatState) {
     if (!communityEnabled) return;
     setSubmitting(state);
+    setError("");
     try {
-      await fetch("/api/seat-status", {
+      const response = await fetch("/api/seat-status", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ spotId, state }),
+      });
+
+      if (!response.ok) {
+        const body = await response.json().catch(() => ({ error: "Submit failed" }));
+        setError(body.error ?? "Submit failed");
+        return;
+      }
+
+      amplitude.track("Seat Status Submitted", {
+        spotId,
+        state,
       });
       await loadStatus();
     } finally {
@@ -96,6 +110,8 @@ export default function SeatStatusReporter({ spotId }: SeatStatusReporterProps) 
       ) : (
         <p className="text-sm text-slate-500">No live seat reports yet.</p>
       )}
+
+      {error && <p className="text-sm text-red-600 mt-2">{error}</p>}
     </div>
   );
 }

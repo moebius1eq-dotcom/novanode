@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import * as amplitude from "@amplitude/analytics-browser";
 import { WorkSpot } from "@/lib/types";
 
 interface SpeedTestProps {
@@ -57,6 +58,13 @@ export default function SpeedTest({ spot }: SpeedTestProps) {
       const uploadMbps = mbpsFromBytes(uploadBytes, ulDuration);
 
       setResult({ latencyMs, downloadMbps, uploadMbps });
+      amplitude.track("Speed Test Completed", {
+        spotId: spot.id,
+        spotSlug: spot.slug,
+        latencyMs,
+        downloadMbps,
+        uploadMbps,
+      });
       setMessage("Speed test complete.");
     } catch {
       setMessage("Speed test failed. Please try again.");
@@ -95,6 +103,13 @@ export default function SpeedTest({ spot }: SpeedTestProps) {
         throw new Error("submit failed");
       }
 
+      amplitude.track("Speed Submitted", {
+        spotId: spot.id,
+        spotSlug: spot.slug,
+        latencyMs: result.latencyMs,
+        downloadMbps: result.downloadMbps,
+        uploadMbps: result.uploadMbps,
+      });
       setMessage("Thanks — your speed result was submitted to NoVaNode.");
     } catch {
       const key = "speedSubmissionsFallback";
